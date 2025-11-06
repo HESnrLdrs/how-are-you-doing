@@ -4,8 +4,20 @@ const app = {
     currentQuestion: 0,
     responses: {},
     
+    // Shuffle array using Fisher-Yates algorithm
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    },
+    
     // Initialize the application
     init() {
+        // Randomize questions to avoid response patterns
+        window.shuffledQuestions = this.shuffleArray(questions);
         this.showScreen('welcome-screen');
     },
     
@@ -13,6 +25,8 @@ const app = {
     startAssessment() {
         this.currentQuestion = 0;
         this.responses = {};
+        // Re-shuffle questions for new randomization each time
+        window.shuffledQuestions = this.shuffleArray(questions);
         this.showScreen('question-screen');
         this.displayQuestion();
     },
@@ -27,19 +41,14 @@ const app = {
     
     // Display the current question
     displayQuestion() {
-        const question = questions[this.currentQuestion];
-        const totalQuestions = questions.length;
+        const question = window.shuffledQuestions[this.currentQuestion];
+        const totalQuestions = window.shuffledQuestions.length;
         
         // Update progress bar
         const progress = ((this.currentQuestion + 1) / totalQuestions) * 100;
         document.getElementById('progress-fill').style.width = progress + '%';
         document.getElementById('current-q').textContent = this.currentQuestion + 1;
         document.getElementById('total-q').textContent = totalQuestions;
-        
-        // Update dimension badge
-        const badge = document.getElementById('dimension-badge');
-        badge.textContent = question.dimension.toUpperCase();
-        badge.className = 'dimension-badge ' + question.dimension;
         
         // Update question text
         document.getElementById('question-text').textContent = question.text;
@@ -89,7 +98,7 @@ const app = {
     updateNavigationButtons() {
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
-        const currentQuestion = questions[this.currentQuestion];
+        const currentQuestion = window.shuffledQuestions[this.currentQuestion];
         
         // Previous button
         if (this.currentQuestion === 0) {
@@ -102,7 +111,7 @@ const app = {
         const hasResponse = this.responses[currentQuestion.id] !== undefined;
         nextBtn.disabled = !hasResponse;
         
-        if (this.currentQuestion === questions.length - 1) {
+        if (this.currentQuestion === window.shuffledQuestions.length - 1) {
             nextBtn.textContent = 'See Results';
         } else {
             nextBtn.textContent = 'Next';
@@ -119,13 +128,13 @@ const app = {
     
     // Move to next question or show results
     nextQuestion() {
-        const currentQuestion = questions[this.currentQuestion];
+        const currentQuestion = window.shuffledQuestions[this.currentQuestion];
         
         if (this.responses[currentQuestion.id] === undefined) {
             return; // Don't proceed if no response
         }
         
-        if (this.currentQuestion < questions.length - 1) {
+        if (this.currentQuestion < window.shuffledQuestions.length - 1) {
             this.currentQuestion++;
             this.displayQuestion();
         } else {
