@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --text-dark: #1e293b;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+    --border-color: #e2e8f0;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --coping-color: #3b82f6;
+    --practical-color: #8b5cf6;
+    --self-color: #ec4899;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+h3 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin: 24px 0 12px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 32px;
+}
+
+.intro-text p {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+}
+
+.framework-overview {
+    background: var(--bg-light);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+.framework-item {
+    margin-bottom: 16px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.framework-item:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.framework-item:last-child {
+    margin-bottom: 0;
+}
+
+.progress-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.dimension-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
+
+.dimension-badge.coping {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--coping-color);
+}
+
+.dimension-badge.practical {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--practical-color);
+}
+
+.dimension-badge.self {
+    background: rgba(236, 72, 153, 0.1);
+    color: var(--self-color);
+}
+
+.response-options {
+    margin: 32px 0;
+}
+
+.response-option {
+    display: block;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.response-option:hover {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.02);
+}
+
+.response-option input[type="radio"] {
+    margin-right: 12px;
+}
+
+.response-option.selected {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.results-summary {
+    margin: 32px 0;
+}
+
+.result-dimension {
+    background: var(--bg-light);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.score-display {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.score-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.score-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 4px;
+    background: white;
+}
+
+.score-label.thriving {
+    color: var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.score-label.managing {
+    color: var(--warning);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.score-label.struggling {
+    color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.result-description {
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.next-steps {
+    margin: 32px 0;
+    padding: 24px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+.next-steps ul {
+    margin-left: 20px;
+}
+
+.next-steps li {
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .content-box {
+        padding: 24px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .navigation-buttons,
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}

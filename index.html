@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Are You Doing? - Navigate Life's Disruptions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="content-box">
+                <h1>How Are You Doing?</h1>
+                <p class="subtitle">A self-assessment for navigating major life disruptions</p>
+                
+                <div class="intro-text">
+                    <p>When life throws you a major disruption - serious illness, family crisis, relationship breakdown, or job loss - it's easy to feel overwhelmed.</p>
+                    
+                    <p>This brief assessment helps you understand where you are across three key areas:</p>
+                    
+                    <div class="framework-overview">
+                        <div class="framework-item">
+                            <strong>Coping:</strong> How you're managing emotionally and psychologically
+                        </div>
+                        <div class="framework-item">
+                            <strong>Practical:</strong> How you're handling daily life and logistics
+                        </div>
+                        <div class="framework-item">
+                            <strong>Self:</strong> How you're maintaining your sense of identity and purpose
+                        </div>
+                    </div>
+                    
+                    <p><strong>Time required:</strong> 10-15 minutes</p>
+                    <p><strong>Your privacy:</strong> All responses stay on your device. Nothing is stored or shared.</p>
+                </div>
+                
+                <button class="btn-primary" onclick="app.startAssessment()">Begin Assessment</button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    Question <span id="current-q">1</span> of <span id="total-q">15</span>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="dimension-badge" id="dimension-badge">COPING</div>
+                
+                <h2 id="question-text">Question text will appear here</h2>
+                
+                <div class="response-options" id="response-options">
+                    <!-- Radio buttons will be inserted here -->
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn-secondary" onclick="app.previousQuestion()" id="prev-btn">Previous</button>
+                    <button class="btn-primary" onclick="app.nextQuestion()" id="next-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="content-box">
+                <h1>Your Assessment Results</h1>
+                
+                <div class="results-summary">
+                    <div class="result-dimension">
+                        <h3>Coping</h3>
+                        <div class="score-display">
+                            <span id="coping-score" class="score-number">0</span>
+                            <span class="score-label" id="coping-label">Label</span>
+                        </div>
+                        <p id="coping-description" class="result-description"></p>
+                    </div>
+                    
+                    <div class="result-dimension">
+                        <h3>Practical</h3>
+                        <div class="score-display">
+                            <span id="practical-score" class="score-number">0</span>
+                            <span class="score-label" id="practical-label">Label</span>
+                        </div>
+                        <p id="practical-description" class="result-description"></p>
+                    </div>
+                    
+                    <div class="result-dimension">
+                        <h3>Self</h3>
+                        <div class="score-display">
+                            <span id="self-score" class="score-number">0</span>
+                            <span class="score-label" id="self-label">Label</span>
+                        </div>
+                        <p id="self-description" class="result-description"></p>
+                    </div>
+                </div>
+                
+                <div class="next-steps">
+                    <h3>What These Results Mean</h3>
+                    <p id="overall-guidance"></p>
+                    
+                    <h3>Suggested Next Steps</h3>
+                    <ul id="next-steps-list"></ul>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn-secondary" onclick="app.downloadResults()">Download Results (PDF)</button>
+                    <button class="btn-primary" onclick="app.restart()">Take Assessment Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Paul Thomas Coaching Ltd. All rights reserved.</p>
+    </footer>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
