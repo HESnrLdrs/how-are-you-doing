@@ -30,13 +30,13 @@ const questions = [
     {
         id: 3,
         dimension: "coping",
-        text: "How are you managing stress and anxiety?",
+        text: "How are you coping with stress and anxiety at the moment?",
         options: [
-            { text: "Using effective strategies, feeling reasonably calm", score: 5 },
-            { text: "Managing with some effort, anxiety is present but controlled", score: 4 },
-            { text: "Struggling to manage, anxiety often takes over", score: 3 },
-            { text: "Overwhelmed by stress, limited ability to cope", score: 2 },
-            { text: "Constant high anxiety, no effective coping strategies", score: 1 }
+            { text: "I'm using strategies that work, feeling reasonably calm", score: 5 },
+            { text: "Managing with some effort, anxiety is there but under control", score: 4 },
+            { text: "Finding it hard to manage, anxiety often takes over", score: 3 },
+            { text: "Feeling overwhelmed by stress, struggling to cope", score: 2 },
+            { text: "Constant high anxiety, nothing seems to help", score: 1 }
         ]
     },
     {
@@ -104,25 +104,25 @@ const questions = [
     {
         id: 9,
         dimension: "practical",
-        text: "How are you managing health-related tasks (appointments, medications, etc.)?",
+        text: "How are you managing health-related things like appointments and medications?",
         options: [
-            { text: "Staying on top of everything health-related", score: 5 },
+            { text: "Staying on top of everything", score: 5 },
             { text: "Managing most things, occasional lapses", score: 4 },
-            { text: "Struggling to keep track of health matters", score: 3 },
-            { text: "Missing appointments or medications regularly", score: 2 },
-            { text: "Unable to manage basic health tasks", score: 1 }
+            { text: "Finding it hard to keep track", score: 3 },
+            { text: "Missing appointments or medications quite regularly", score: 2 },
+            { text: "Can't manage even basic health tasks", score: 1 }
         ]
     },
     {
         id: 10,
         dimension: "practical",
-        text: "How organized do you feel in dealing with your situation?",
+        text: "How organised do you feel right now?",
         options: [
-            { text: "Have clear plans and systems in place", score: 5 },
-            { text: "Reasonably organized, managing to track things", score: 4 },
-            { text: "Things feel chaotic, hard to keep organized", score: 3 },
-            { text: "Very disorganized, constantly forgetting things", score: 2 },
-            { text: "Complete chaos, no sense of organization", score: 1 }
+            { text: "I've got clear plans and systems that work", score: 5 },
+            { text: "Reasonably organised, managing to track most things", score: 4 },
+            { text: "Things feel chaotic, hard to stay on top of it all", score: 3 },
+            { text: "Very disorganised, constantly forgetting things", score: 2 },
+            { text: "Complete chaos, no sense of organisation at all", score: 1 }
         ]
     },
     
@@ -166,12 +166,12 @@ const questions = [
     {
         id: 14,
         dimension: "self",
-        text: "Do you have a sense of purpose or meaning in your life right now?",
+        text: "Do you have a sense of purpose or meaning right now?",
         options: [
-            { text: "Yes, I have clear sense of purpose", score: 5 },
-            { text: "Some sense of purpose, though uncertain", score: 4 },
-            { text: "Purpose feels unclear or distant", score: 3 },
-            { text: "Very little sense of purpose", score: 2 },
+            { text: "Yes, I've got a clear sense of purpose", score: 5 },
+            { text: "Some sense of purpose, though it feels uncertain", score: 4 },
+            { text: "Purpose feels unclear or quite distant", score: 3 },
+            { text: "Very little sense of purpose at the moment", score: 2 },
             { text: "No sense of purpose or meaning", score: 1 }
         ]
     },
@@ -195,34 +195,34 @@ const interpretations = {
         thriving: {
             range: [21, 25],
             label: "Thriving",
-            description: "You're managing the emotional and psychological aspects well. You have effective coping strategies and emotional resilience.",
+            description: "You're managing the emotional side of things well. Whatever strategies you're using, they're working.",
             suggestions: [
-                "Maintain your current coping strategies",
-                "Consider what's working well so you can draw on it if things get harder",
-                "Look for ways to support others who may be struggling"
+                "Keep doing what you're doing – it's clearly helping",
+                "Notice what's working so you can draw on it if things get tougher",
+                "You might have some capacity to support others who are struggling"
             ]
         },
         managing: {
             range: [13, 20],
             label: "Managing",
-            description: "You're coping reasonably well but there are challenges. Some days are harder than others.",
+            description: "You're coping reasonably well, though some days are harder than others. That's completely normal given what you're dealing with.",
             suggestions: [
-                "Build on the coping strategies that are working",
-                "Consider talking to someone you trust about your situation",
-                "Look after basics like sleep and stress management",
-                "Be patient with yourself on difficult days"
+                "Build on whatever's working for you already",
+                "Talk to someone you trust about what you're going through",
+                "Look after the basics – sleep, eating, a bit of fresh air",
+                "Be patient with yourself when it feels harder"
             ]
         },
         struggling: {
             range: [5, 12],
             label: "Struggling",
-            description: "You're finding it hard to cope emotionally right now. This is understandable given what you're facing.",
+            description: "You're finding it really hard to cope emotionally right now. That's completely understandable – what you're facing is genuinely difficult.",
             suggestions: [
-                "Consider reaching out to a counselor or therapist",
-                "Talk to your GP about how you're feeling",
-                "Connect with support groups who understand your situation",
-                "Focus on one day at a time",
-                "Don't hesitate to ask for professional help"
+                "Consider talking to a counsellor or therapist – they can really help",
+                "Speak to your GP about how you're feeling",
+                "Look for support groups with people who understand what you're going through",
+                "Take things one day at a time – that's enough for now",
+                "Please don't hesitate to ask for professional help"
             ]
         }
     },
@@ -230,34 +230,34 @@ const interpretations = {
         thriving: {
             range: [21, 25],
             label: "Thriving",
-            description: "You're managing the practical aspects of your situation effectively. Daily tasks and logistics are under control.",
+            description: "You're managing the practical side of things really well. The daily tasks and logistics are under control.",
             suggestions: [
-                "Keep your organizational systems going",
-                "You might have capacity to help others with practical matters",
-                "Document what's working in case you need to share it"
+                "Keep your systems going – they're working",
+                "You might be able to help others with practical things",
+                "Make a note of what's working in case you need to come back to it"
             ]
         },
         managing: {
             range: [13, 20],
             label: "Managing",
-            description: "You're handling the essentials but some things are challenging. Practical matters need attention.",
+            description: "You're handling the essentials, though some things are slipping through the cracks. That's understandable.",
             suggestions: [
-                "Focus on the most important practical tasks first",
-                "Ask for specific practical help where you need it",
-                "Consider simple systems to track important tasks",
-                "Don't try to do everything - prioritize ruthlessly"
+                "Focus on what absolutely has to get done, let other things wait",
+                "Ask for specific help with practical things – people often want to help but don't know how",
+                "Simple systems help – even just a list on the fridge",
+                "You don't have to do everything – prioritise ruthlessly"
             ]
         },
         struggling: {
             range: [5, 12],
             label: "Struggling",
-            description: "Practical matters are overwhelming right now. You need support with daily tasks and organization.",
+            description: "The practical side of things is overwhelming right now. You need some help with day-to-day tasks and getting organised.",
             suggestions: [
-                "Reach out for practical support - family, friends, community services",
-                "Break tasks into very small steps",
-                "Make lists of what needs doing and who could help",
-                "Consider professional help (social services, financial advice, etc.)",
-                "Focus only on absolute essentials for now"
+                "Reach out for practical support – family, friends, local services",
+                "Break everything down into really small steps",
+                "Write lists of what needs doing and who might be able to help",
+                "Consider getting professional help – social services, Citizens Advice, financial advisers",
+                "Focus only on absolute essentials for now – everything else can wait"
             ]
         }
     },
@@ -265,34 +265,34 @@ const interpretations = {
         thriving: {
             range: [21, 25],
             label: "Thriving",
-            description: "You're maintaining a strong sense of self despite the disruption. Your identity and purpose remain intact.",
+            description: "You're holding onto a strong sense of who you are, even through this disruption. That's a real strength.",
             suggestions: [
-                "Continue the activities that connect you to yourself",
-                "Your sense of self can be an anchor for others",
-                "Keep nurturing the relationships that matter"
+                "Keep doing the things that connect you to yourself",
+                "Your sense of self can be a real anchor for other people too",
+                "Keep nurturing the relationships that matter to you"
             ]
         },
         managing: {
             range: [13, 20],
             label: "Managing",
-            description: "Your sense of self is holding up though parts of your identity may feel challenged. Some meaningful activities continue.",
+            description: "Your sense of who you are is holding up, though parts of your identity might feel challenged or uncertain. That's really common.",
             suggestions: [
-                "Protect time for activities that matter to you",
+                "Protect time for things that matter to you, even small things",
                 "Stay connected to people who see you as you really are",
-                "Remember that identity can evolve through difficult times",
-                "Look for small ways to express who you are"
+                "Remember that who you are can evolve through difficult times – that's okay",
+                "Look for small ways to express yourself"
             ]
         },
         struggling: {
             range: [5, 12],
             label: "Struggling",
-            description: "You're experiencing significant challenges to your sense of self. Identity and meaning feel lost or uncertain.",
+            description: "You're feeling quite disconnected from your sense of self right now. Who you are and what matters to you might feel lost or very uncertain.",
             suggestions: [
-                "This loss of self is common in major disruptions - you're not alone",
-                "Consider working with a coach or therapist on rebuilding identity",
-                "Start very small - one meaningful activity or connection",
-                "Be patient - sense of self can be rebuilt",
-                "Connect with others who've faced similar disruptions"
+                "This loss of self is really common in major disruptions – you're not alone in this",
+                "Working with a coach or therapist on rebuilding your sense of identity can genuinely help",
+                "Start very small – just one meaningful thing or one real connection",
+                "Be patient with yourself – your sense of self can be rebuilt, it just takes time",
+                "Connect with others who've faced similar disruptions – they'll understand"
             ]
         }
     }

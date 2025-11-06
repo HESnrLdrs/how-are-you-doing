@@ -223,17 +223,17 @@ const app = {
         let nextSteps = [];
         
         if (strugglingAreas.length >= 2) {
-            guidance = "You're facing significant challenges across multiple areas right now. This is a time to reach out for professional support and focus on the basics. There's no shame in finding things hard - what you're going through is genuinely difficult.";
+            guidance = "You're facing real challenges across several areas right now. This is a time to reach out for professional support and just focus on getting through each day. There's absolutely no shame in finding things hard – what you're dealing with is genuinely difficult.";
             nextSteps = [
-                "Consider speaking with your GP or a counselor as soon as possible",
-                "Reach out to one trusted person and tell them you're struggling",
-                "Focus only on the absolute essentials for the next few days",
+                "Talk to your GP or a counsellor as soon as you can",
+                "Tell one person you trust that you're really struggling",
+                "Focus only on absolute essentials for the next few days",
                 "Look into crisis support services if you need immediate help",
-                "Remember: asking for help is a sign of strength, not weakness"
+                "Remember: asking for help is strength, not weakness"
             ];
         } else if (strugglingAreas.length === 1) {
             const area = strugglingAreas[0];
-            guidance = `You're doing well in some areas but struggling with ${area}. This suggests a focused area where support could make a real difference. Your strengths in other areas can help you address this challenge.`;
+            guidance = `You're doing well in some areas but ${area} is tough right now. That's actually helpful to know – it gives you somewhere clear to focus. The strengths you have in other areas can help you tackle this.`;
             nextSteps = interpretations[area].suggestions;
         } else {
             const managingAreas = [];
@@ -242,22 +242,22 @@ const app = {
             if (scores.self >= 13 && scores.self <= 20) managingAreas.push('self');
             
             if (managingAreas.length > 0) {
-                guidance = "You're managing reasonably well overall, though some areas need attention. This suggests resilience and effective strategies. Keep doing what's working and don't hesitate to ask for support when you need it.";
+                guidance = "You're managing reasonably well overall, though there are things that need attention. That suggests you've got resilience and some effective strategies. Keep doing what's working, and don't hesitate to ask for support when you need it.";
                 nextSteps = [
-                    "Keep using the strategies that are working for you",
-                    "Stay connected with your support network",
-                    "Be proactive about asking for help before things get harder",
-                    "Remember that managing doesn't mean you have to do it alone",
-                    "Consider what might help you move from managing to thriving"
+                    "Keep using whatever's working for you",
+                    "Stay connected with people who support you",
+                    "Ask for help before things get harder, not after",
+                    "Remember that managing doesn't mean doing it alone",
+                    "Think about what might help you move from managing to thriving"
                 ];
             } else {
-                guidance = "You're navigating this disruption with considerable strength and resilience. Your coping strategies, practical management, and sense of self are all intact. This is a testament to your resources and support systems.";
+                guidance = "You're navigating this disruption with real strength. Your coping, your practical management, and your sense of self are all holding up well. Whatever you're doing, it's working.";
                 nextSteps = [
-                    "Continue with what's working well for you",
-                    "Stay aware of early warning signs if things get harder",
-                    "Consider how you might support others facing similar challenges",
-                    "Document your strategies in case you need them later",
-                    "Remember that doing well now doesn't mean you won't need support later - stay open to that"
+                    "Keep going with what's working",
+                    "Notice the early warning signs if things start to get harder",
+                    "You might be able to support others facing similar challenges",
+                    "Make a note of what's working – you might need to come back to it",
+                    "Doing well now doesn't mean you won't need support later – stay open to that possibility"
                 ];
             }
         }
@@ -278,9 +278,9 @@ const app = {
         const scores = this.calculateScores();
         
         // Create text content for download
-        let content = 'HOW ARE YOU DOING? - ASSESSMENT RESULTS\n';
-        content += '=====================================\n\n';
-        content += `Date: ${new Date().toLocaleDateString()}\n\n`;
+        let content = 'HOW ARE YOU DOING? - YOUR RESULTS\n';
+        content += '===================================\n\n';
+        content += `Date: ${new Date().toLocaleDateString('en-GB')}\n\n`;
         
         ['coping', 'practical', 'self'].forEach(dimension => {
             const score = scores[dimension];
