@@ -85,7 +85,7 @@ const questions = [
             { text: "Stable and under control", score: 5 },
             { text: "Some concerns but manageable", score: 4 },
             { text: "Significant worries, limited resources", score: 3 },
-            { text: "Serious financial pressure causing major stress", score: 2 },
+            { text: "Serious financial pressure causing a lot of stress", score: 2 },
             { text: "Critical financial crisis", score: 1 }
         ]
     },
@@ -288,7 +288,7 @@ const interpretations = {
             label: "Struggling",
             description: "You're feeling quite disconnected from your sense of self right now. Who you are and what matters to you might feel lost or very uncertain.",
             suggestions: [
-                "This loss of self is really common in major disruptions – you're not alone in this",
+                "This loss of self is really common when life disrupts you – you're not alone in this",
                 "Working with a coach or therapist on rebuilding your sense of identity can genuinely help",
                 "Start very small – just one meaningful thing or one real connection",
                 "Be patient with yourself – your sense of self can be rebuilt, it just takes time",
