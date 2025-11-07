@@ -81,9 +81,9 @@ const questions = [
     {
         id: 11,
         dimension: "self",
-        text: "How connected do you feel to who you are?",
-        leftLabel: "Lost myself",
-        rightLabel: "Still myself"
+        text: "Can you still do the things that are important to you?",
+        leftLabel: "Can't do them",
+        rightLabel: "Still doing them"
     },
     {
         id: 12,
@@ -127,9 +127,11 @@ function shuffleArray(array) {
 
 // Calculate zone based on average score (0-100)
 function getZone(score) {
-    if (score >= 70) return 'thriving';
-    if (score >= 35) return 'managing';
-    return 'struggling';
+    if (score >= 80) return 'thriving';
+    if (score >= 60) return 'doing-well';
+    if (score >= 40) return 'managing';
+    if (score >= 20) return 'struggling';
+    return 'critical';
 }
 
 // Get needle rotation for gauge (-135deg to +45deg = 180deg range)
@@ -142,44 +144,68 @@ function getNeedleRotation(score) {
 const interpretations = {
     coping: {
         thriving: {
-            description: "You're managing the emotional side of things well. Whatever you're doing, it's working.",
-            action: "Keep doing what you're doing – it's clearly helping you cope."
+            description: "You're managing the emotional side really well right now.",
+            action: "Keep doing what you're doing – it's clearly working."
+        },
+        'doing-well': {
+            description: "You're coping well emotionally. Some difficult moments but generally managing.",
+            action: "Keep building on what's helping you cope."
         },
         managing: {
-            description: "You're coping reasonably well, though some days are harder than others. That's completely normal.",
-            action: "Build on whatever's working for you already. Talk to someone you trust about what you're going through."
+            description: "You're getting by emotionally, though some days are harder than others.",
+            action: "Focus on what helps you get through each day."
         },
         struggling: {
-            description: "You're finding it really hard to cope emotionally right now. That's completely understandable.",
-            action: "Consider talking to a counsellor or therapist – they can really help. Speak to your GP about how you're feeling."
+            description: "You're finding it hard to cope emotionally right now.",
+            action: "You need some support with the emotional side of things."
+        },
+        critical: {
+            description: "You're really struggling to cope emotionally.",
+            action: "You need urgent support with how you're feeling."
         }
     },
     practical: {
         thriving: {
-            description: "You're managing the practical side of things really well. Daily tasks and logistics are under control.",
-            action: "Keep your systems going – they're working. You might be able to help others with practical things."
+            description: "Daily life is running smoothly. You're on top of tasks and logistics.",
+            action: "Your systems are working well – keep them going."
+        },
+        'doing-well': {
+            description: "You're handling practical matters well. Most things are under control.",
+            action: "Keep your current routines going."
         },
         managing: {
-            description: "You're handling the essentials, though some things are slipping through the cracks. That's understandable.",
-            action: "Focus on what absolutely has to get done, let other things wait. Ask for specific help with practical things."
+            description: "You're managing the essentials, though some things are slipping.",
+            action: "Focus on what absolutely has to get done."
         },
         struggling: {
-            description: "The practical side of things is overwhelming you right now. You need some help with day-to-day tasks.",
-            action: "Reach out for practical support – family, friends, local services. Break everything down into really small steps."
+            description: "Daily tasks and practical matters are overwhelming you.",
+            action: "You need help getting the practical side of things under control."
+        },
+        critical: {
+            description: "You can't keep up with basic daily tasks.",
+            action: "You need urgent practical support right now."
         }
     },
     self: {
         thriving: {
-            description: "You're holding onto a strong sense of who you are. That's a real strength to build on.",
-            action: "Keep doing the things that connect you to yourself. Keep nurturing the relationships that matter to you."
+            description: "You have a strong sense of who you are and what matters to you.",
+            action: "Keep nurturing the things that connect you to yourself."
+        },
+        'doing-well': {
+            description: "You're maintaining a good sense of who you are.",
+            action: "Keep doing the things that matter to you."
         },
         managing: {
-            description: "Your sense of who you are is holding up, though parts of your identity might feel challenged. That's really common.",
-            action: "Protect time for things that matter to you, even small things. Stay connected to people who see you as you really are."
+            description: "Your sense of self is holding up, though parts feel challenged.",
+            action: "Protect some time for things that are meaningful to you."
         },
         struggling: {
-            description: "You're feeling quite disconnected from your sense of self right now. Who you are and what matters might feel lost.",
-            action: "This loss of self is really common when life disrupts you – you're not alone. Working with a coach or therapist can genuinely help."
+            description: "You're feeling disconnected from who you are and what matters.",
+            action: "You need to reconnect with your sense of self."
+        },
+        critical: {
+            description: "You feel like you've lost yourself completely.",
+            action: "You need support rebuilding your sense of who you are."
         }
     }
 };
