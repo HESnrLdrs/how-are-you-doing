@@ -134,10 +134,10 @@ function getZone(score) {
     return 'critical';
 }
 
-// Get needle rotation for gauge (E at -120deg, F at +30deg = 150deg range)
+// Get needle rotation for gauge (E at -105deg, F at +45deg = 150deg range)
 function getNeedleRotation(score) {
-    // 0 = -120deg (E at 8 o'clock), 50 = -45deg (12 o'clock), 100 = +30deg (F at 2 o'clock)
-    return -120 + (score * 1.5);
+    // 0 = -105deg (E at 8 o'clock), 50 = -30deg (just right of 12 o'clock), 100 = +45deg (F at 2 o'clock)
+    return -105 + (score * 1.5);
 }
 
 // Interpretations for each dimension and zone
