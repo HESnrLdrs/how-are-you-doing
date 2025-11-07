@@ -159,9 +159,11 @@ const app = {
             const zone = getZone(score);
             const rotation = getNeedleRotation(score);
             const isFocus = dim.key === lowestDimension;
-            const statusText = zone === 'thriving' ? 'Going strong' : 
+            const statusText = zone === 'thriving' ? 'Thriving' : 
+                              zone === 'doing-well' ? 'Doing well' :
                               zone === 'managing' ? 'Managing' : 
-                              'Need help';
+                              zone === 'struggling' ? 'Struggling' :
+                              'Critical';
             
             return `
                 <div class="gauge-item">
