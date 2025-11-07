@@ -1,85 +1,42 @@
-# How Are You Doing? Assessment
+# How Are You Doing? - Slider Version
 
-A self-assessment tool for people navigating major life disruptions.
+## Overview
+Quick check-in tool using sliders instead of multiple-choice questions. People position sliders where they feel they are right now across three dimensions: Coping, Practical, and Self.
 
-## Quick Start - Deploy to GitHub Pages
+## What's Different
+- **Sliders not questions**: 15 sliders (0-100 scale) instead of 75 multiple choice options
+- **Faster**: Takes about 5 minutes instead of 10-15
+- **More control**: People place themselves where they feel, not forced into boxes
+- **Visual results**: Fuel gauge displays showing E to F
+- **No numbers in results**: Just visual gauges and descriptive text
 
-### Method 1: Upload via GitHub Web Interface (Easiest)
-
-1. Go to https://github.com/HESnrLdrs/how-are-you-doing
-
-2. Click "Add file" → "Upload files"
-
-3. Drag and drop these files:
-   - index.html
-   - styles.css
-   - app.js
-   - questions.js
-
-4. Scroll down and click "Commit changes"
-
-5. Go to repository Settings → Pages (left sidebar)
-
-6. Under "Source", select "main" branch
-
-7. Click "Save"
-
-8. Wait 1-2 minutes, then your app will be live at:
-   **https://hesnrldrs.github.io/how-are-you-doing/**
-
-### Method 2: Using Git Command Line
-
-If you prefer using Git commands:
-
-```bash
-cd /path/to/your/folder
-git init
-git add .
-git commit -m "Initial commit - How Are You Doing app"
-git branch -M main
-git remote add origin https://github.com/HESnrLdrs/how-are-you-doing.git
-git push -u origin main
-```
-
-Then enable GitHub Pages as described in Method 1, steps 5-8.
-
-## What This App Does
-
-Assesses three key dimensions when someone faces a major life disruption:
-
-- **Coping**: Emotional and psychological wellbeing
-- **Practical**: Daily tasks and logistics
-- **Self**: Identity and sense of purpose
-
-The assessment takes 10-15 minutes and provides personalized results with specific suggestions.
-
-## Files Included
-
+## Files
 - `index.html` - Main page structure
-- `styles.css` - Styling and layout
-- `app.js` - Application logic
-- `questions.js` - Assessment questions and interpretations
-- `README.md` - This file
+- `styles-slider.css` - All styling including fuel gauges
+- `questions-slider.js` - 15 questions with slider labels
+- `app-slider.js` - App logic and results calculation
+
+## Scoring
+- Each slider: 0-100
+- Average per dimension (5 questions each)
+- Zones: 0-34 Struggling, 35-69 Managing, 70-100 Thriving
+- Needle position on gauge reflects the score
+
+## To Deploy
+1. Upload all 4 files to your GitHub repository
+2. Site updates automatically at: https://hesnrldrs.github.io/how-are-you-doing/
 
 ## Privacy
+Everything runs in the browser - no data collected or stored anywhere.
 
-All responses stay on the user's device. No data is collected, stored, or transmitted.
+## Next Steps
+Test with Claire and others, then decide:
+- Keep slider version OR
+- Build detailed question version OR  
+- Offer both versions
 
-## Testing
-
-After deployment, test:
-1. Welcome screen displays correctly
-2. All 15 questions flow smoothly
-3. Results calculate properly
-4. Download function works
-5. Mobile responsiveness
-
-## Customization
-
-To update questions or interpretations, edit `questions.js`.
-To change styling, edit `styles.css`.
-
-## Support
-
-Paul Thomas Coaching Ltd
-www.paulthomascoaching.com
+## Notes
+- Questions are randomized each time
+- Results focus on lowest scoring dimension
+- Fuel gauges animate when results display
+- Works on mobile and desktop

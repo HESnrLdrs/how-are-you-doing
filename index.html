@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How Are You Doing? - Navigate Life's Disruptions</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>How Are You Doing?</title>
+    <link rel="stylesheet" href="styles-slider.css">
 </head>
 <body>
     <div class="container">
@@ -12,30 +12,32 @@
         <div id="welcome-screen" class="screen active">
             <div class="content-box">
                 <h1>How Are You Doing?</h1>
-                <p class="subtitle">A self-assessment for navigating through life's disruptions</p>
+                <p class="subtitle">A quick check-in on where you are right now</p>
                 
                 <div class="intro-text">
-                    <p>Serious illness, family crisis, relationship breakdown, job loss – or even smaller disruptions that still knock you off balance. When something like this happens, it's easy to feel overwhelmed and lose your bearings.</p>
+                    <p>Whether you're navigating a major disruption or just want to take stock of how things are going, this quick check-in helps you see where you are.</p>
                     
-                    <p>This short questionnaire helps you get a clearer picture of where you are right now over three areas:</p>
+                    <p>Simply position each slider where you feel you are right now. No right or wrong answers – just your honest sense of where things stand.</p>
+                    
+                    <p>We'll look at three areas:</p>
                     
                     <div class="framework-overview">
                         <div class="framework-item">
-                            <strong>Coping:</strong> How you're coping emotionally
+                            <strong>Coping:</strong> How you're managing emotionally
                         </div>
                         <div class="framework-item">
                             <strong>Practical:</strong> How you're handling daily life
                         </div>
                         <div class="framework-item">
-                            <strong>Self:</strong> How you're maintaining your sense of self
+                            <strong>Self:</strong> How connected you feel to who you are
                         </div>
                     </div>
                     
-                    <p><strong>It takes about 10-15 minutes.</strong></p>
-                    <p><strong>Your privacy:</strong> All responses stay on your device, nowhere else.</p>
+                    <p><strong>Takes about 5 minutes.</strong></p>
+                    <p><strong>Your privacy:</strong> Everything stays on your device, nowhere else.</p>
                 </div>
                 
-                <button class="btn-primary" onclick="app.startAssessment()">Start the questionnaire</button>
+                <button class="btn-primary" onclick="app.startAssessment()">Start</button>
             </div>
         </div>
 
@@ -53,8 +55,18 @@
             <div class="content-box">
                 <h2 id="question-text">Question text will appear here</h2>
                 
-                <div class="response-options" id="response-options">
-                    <!-- Radio buttons will be inserted here -->
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span class="label-left" id="label-left">Struggling</span>
+                        <span class="label-right" id="label-right">Thriving</span>
+                    </div>
+                    <input type="range" 
+                           id="response-slider" 
+                           class="response-slider" 
+                           min="0" 
+                           max="100" 
+                           value="50">
+                    <div class="slider-marker" id="slider-marker"></div>
                 </div>
                 
                 <div class="navigation-buttons">
@@ -67,48 +79,20 @@
         <!-- Results Screen -->
         <div id="results-screen" class="screen">
             <div class="content-box">
-                <h1>Your Assessment Results</h1>
+                <h1>How You're Doing Right Now</h1>
+                <p class="subtitle">Here's what your responses show</p>
                 
-                <div class="results-summary">
-                    <div class="result-dimension">
-                        <h3>Coping</h3>
-                        <div class="score-display">
-                            <span id="coping-score" class="score-number">0</span>
-                            <span class="score-label" id="coping-label">Label</span>
-                        </div>
-                        <p id="coping-description" class="result-description"></p>
-                    </div>
-                    
-                    <div class="result-dimension">
-                        <h3>Practical</h3>
-                        <div class="score-display">
-                            <span id="practical-score" class="score-number">0</span>
-                            <span class="score-label" id="practical-label">Label</span>
-                        </div>
-                        <p id="practical-description" class="result-description"></p>
-                    </div>
-                    
-                    <div class="result-dimension">
-                        <h3>Self</h3>
-                        <div class="score-display">
-                            <span id="self-score" class="score-number">0</span>
-                            <span class="score-label" id="self-label">Label</span>
-                        </div>
-                        <p id="self-description" class="result-description"></p>
-                    </div>
+                <div class="gauges-container" id="gauges-container">
+                    <!-- Gauges will be inserted here by JavaScript -->
                 </div>
                 
-                <div class="next-steps">
-                    <h3>What These Results Mean</h3>
-                    <p id="overall-guidance"></p>
-                    
-                    <h3>Suggested Next Steps</h3>
-                    <ul id="next-steps-list"></ul>
+                <div id="interpretation-area">
+                    <!-- Interpretation will be inserted here -->
                 </div>
                 
                 <div class="action-buttons">
-                    <button class="btn-secondary" onclick="app.downloadResults()">Download Results (PDF)</button>
-                    <button class="btn-primary" onclick="app.restart()">Take Assessment Again</button>
+                    <button class="btn-secondary" onclick="window.print()">Save Results</button>
+                    <button class="btn-primary" onclick="app.restart()">Take Again</button>
                 </div>
             </div>
         </div>
@@ -118,7 +102,7 @@
         <p>&copy; 2024 Paul Thomas Coaching Ltd. All rights reserved.</p>
     </footer>
 
-    <script src="questions.js"></script>
-    <script src="app.js"></script>
+    <script src="questions-slider.js"></script>
+    <script src="app-slider.js"></script>
 </body>
 </html>
