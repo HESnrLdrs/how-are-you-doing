@@ -1,299 +1,211 @@
-// Questions for the How Are You Doing? Assessment
-// Organized by dimension: Coping, Practical, Self
+// Slider-based questions for How Are You Doing?
+// Each question gets a 0-100 slider response
+// Dimensions: Coping (5q), Practical (5q), Self (5q)
 
 const questions = [
-    // COPING QUESTIONS (5 questions)
+    // COPING QUESTIONS
     {
         id: 1,
         dimension: "coping",
         text: "How would you describe your emotional state right now?",
-        options: [
-            { text: "I feel emotionally stable and able to manage my feelings", score: 5 },
-            { text: "I have ups and downs but generally feel in control", score: 4 },
-            { text: "My emotions feel unpredictable and harder to manage", score: 3 },
-            { text: "I often feel overwhelmed by my emotions", score: 2 },
-            { text: "I feel emotionally exhausted most of the time", score: 1 }
-        ]
+        leftLabel: "Emotionally exhausted",
+        rightLabel: "Emotionally stable"
     },
     {
         id: 2,
         dimension: "coping",
         text: "How well are you sleeping?",
-        options: [
-            { text: "Sleeping normally, feeling rested", score: 5 },
-            { text: "Some sleep disruption but managing okay", score: 4 },
-            { text: "Sleep is frequently disturbed", score: 3 },
-            { text: "Significant sleep problems affecting my days", score: 2 },
-            { text: "Sleep is very poor, barely functioning", score: 1 }
-        ]
+        leftLabel: "Very poorly",
+        rightLabel: "Sleeping well"
     },
     {
         id: 3,
         dimension: "coping",
-        text: "How are you coping with stress and anxiety at the moment?",
-        options: [
-            { text: "I'm using strategies that work, feeling reasonably calm", score: 5 },
-            { text: "Managing with some effort, anxiety is there but under control", score: 4 },
-            { text: "Finding it hard to manage, anxiety often takes over", score: 3 },
-            { text: "Feeling overwhelmed by stress, struggling to cope", score: 2 },
-            { text: "Constant high anxiety, nothing seems to help", score: 1 }
-        ]
+        text: "How are you managing stress and anxiety?",
+        leftLabel: "Overwhelmed",
+        rightLabel: "Under control"
     },
     {
         id: 4,
         dimension: "coping",
         text: "Are you able to talk about what you're going through?",
-        options: [
-            { text: "Yes, I have people I can talk to and it helps", score: 5 },
-            { text: "Sometimes, though it's not always easy", score: 4 },
-            { text: "I find it difficult to open up", score: 3 },
-            { text: "I rarely talk about it, even when I need to", score: 2 },
-            { text: "I feel completely isolated and unable to share", score: 1 }
-        ]
+        leftLabel: "Can't open up",
+        rightLabel: "Can talk freely"
     },
     {
         id: 5,
         dimension: "coping",
         text: "How hopeful do you feel about the future?",
-        options: [
-            { text: "I can see a path forward and feel reasonably hopeful", score: 5 },
-            { text: "Some days are hopeful, others less so", score: 4 },
-            { text: "Hope feels distant right now", score: 3 },
-            { text: "I struggle to see any positive future", score: 2 },
-            { text: "I feel hopeless about what lies ahead", score: 1 }
-        ]
+        leftLabel: "Hopeless",
+        rightLabel: "Hopeful"
     },
     
-    // PRACTICAL QUESTIONS (5 questions)
+    // PRACTICAL QUESTIONS
     {
         id: 6,
         dimension: "practical",
-        text: "How are you managing daily tasks and responsibilities?",
-        options: [
-            { text: "Keeping on top of things, managing well", score: 5 },
-            { text: "Managing the essentials, some things slipping", score: 4 },
-            { text: "Struggling to keep up, many things being delayed", score: 3 },
-            { text: "Only managing the most urgent tasks", score: 2 },
-            { text: "Unable to manage basic daily tasks", score: 1 }
-        ]
+        text: "How are you managing daily tasks?",
+        leftLabel: "Can't keep up",
+        rightLabel: "On top of things"
     },
     {
         id: 7,
         dimension: "practical",
         text: "How is your financial situation?",
-        options: [
-            { text: "Stable and under control", score: 5 },
-            { text: "Some concerns but manageable", score: 4 },
-            { text: "Significant worries, limited resources", score: 3 },
-            { text: "Serious financial pressure causing a lot of stress", score: 2 },
-            { text: "Critical financial crisis", score: 1 }
-        ]
+        leftLabel: "Critical stress",
+        rightLabel: "Stable"
     },
     {
         id: 8,
         dimension: "practical",
         text: "Do you have the practical support you need?",
-        options: [
-            { text: "Yes, good support network helping with practical matters", score: 5 },
-            { text: "Some support available when needed", score: 4 },
-            { text: "Limited support, often managing alone", score: 3 },
-            { text: "Very little practical support", score: 2 },
-            { text: "No practical support available", score: 1 }
-        ]
+        leftLabel: "No support",
+        rightLabel: "Good support"
     },
     {
         id: 9,
         dimension: "practical",
-        text: "How are you managing health-related things like appointments and medications?",
-        options: [
-            { text: "Staying on top of everything", score: 5 },
-            { text: "Managing most things, occasional lapses", score: 4 },
-            { text: "Finding it hard to keep track", score: 3 },
-            { text: "Missing appointments or medications quite regularly", score: 2 },
-            { text: "Can't manage even basic health tasks", score: 1 }
-        ]
+        text: "How are you managing health-related tasks?",
+        leftLabel: "Can't manage",
+        rightLabel: "Staying on top"
     },
     {
         id: 10,
         dimension: "practical",
-        text: "How organised do you feel right now?",
-        options: [
-            { text: "I've got clear plans and systems that work", score: 5 },
-            { text: "Reasonably organised, managing to track most things", score: 4 },
-            { text: "Things feel chaotic, hard to stay on top of it all", score: 3 },
-            { text: "Very disorganised, constantly forgetting things", score: 2 },
-            { text: "Complete chaos, no sense of organisation at all", score: 1 }
-        ]
+        text: "How organised do you feel?",
+        leftLabel: "Complete chaos",
+        rightLabel: "Well organised"
     },
     
-    // SELF QUESTIONS (5 questions)
+    // SELF QUESTIONS
     {
         id: 11,
         dimension: "self",
-        text: "How connected do you feel to your sense of who you are?",
-        options: [
-            { text: "I still feel like myself, my identity is intact", score: 5 },
-            { text: "Mostly myself, though some aspects feel changed", score: 4 },
-            { text: "I sometimes don't recognize myself", score: 3 },
-            { text: "I feel quite disconnected from who I used to be", score: 2 },
-            { text: "I've lost all sense of who I am", score: 1 }
-        ]
+        text: "How connected do you feel to who you are?",
+        leftLabel: "Lost myself",
+        rightLabel: "Still myself"
     },
     {
         id: 12,
         dimension: "self",
-        text: "Are you able to do things that matter to you or bring you joy?",
-        options: [
-            { text: "Yes, I'm maintaining activities that are important to me", score: 5 },
-            { text: "Some meaningful activities, less than before", score: 4 },
-            { text: "Very few moments of meaning or enjoyment", score: 3 },
-            { text: "Rarely doing anything meaningful", score: 2 },
-            { text: "Nothing brings meaning or joy anymore", score: 1 }
-        ]
+        text: "Are you able to do things that matter to you?",
+        leftLabel: "Nothing meaningful",
+        rightLabel: "Doing what matters"
     },
     {
         id: 13,
         dimension: "self",
-        text: "How do you feel about your relationships with others?",
-        options: [
-            { text: "Relationships feel strong and supportive", score: 5 },
-            { text: "Some good connections, others more strained", score: 4 },
-            { text: "Relationships feel difficult or distant", score: 3 },
-            { text: "Significant relationship breakdown or conflict", score: 2 },
-            { text: "Feeling completely isolated or disconnected", score: 1 }
-        ]
+        text: "How do you feel about your relationships?",
+        leftLabel: "Disconnected",
+        rightLabel: "Strong connections"
     },
     {
         id: 14,
         dimension: "self",
-        text: "Do you have a sense of purpose or meaning right now?",
-        options: [
-            { text: "Yes, I've got a clear sense of purpose", score: 5 },
-            { text: "Some sense of purpose, though it feels uncertain", score: 4 },
-            { text: "Purpose feels unclear or quite distant", score: 3 },
-            { text: "Very little sense of purpose at the moment", score: 2 },
-            { text: "No sense of purpose or meaning", score: 1 }
-        ]
+        text: "Do you have a sense of purpose right now?",
+        leftLabel: "No purpose",
+        rightLabel: "Clear purpose"
     },
     {
         id: 15,
         dimension: "self",
-        text: "How much control do you feel you have over your situation?",
-        options: [
-            { text: "I feel I have reasonable control and can influence outcomes", score: 5 },
-            { text: "Some control, though external factors are significant", score: 4 },
-            { text: "Limited control, mostly reacting to events", score: 3 },
-            { text: "Very little control, feeling powerless", score: 2 },
-            { text: "No control at all, completely at the mercy of circumstances", score: 1 }
-        ]
+        text: "How much control do you feel you have?",
+        leftLabel: "No control",
+        rightLabel: "Good control"
     }
 ];
 
-// Interpretation guidance for results
+// Shuffle function
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Calculate zone based on average score (0-100)
+function getZone(score) {
+    if (score >= 80) return 'thriving';
+    if (score >= 60) return 'doing-well';
+    if (score >= 40) return 'managing';
+    if (score >= 20) return 'struggling';
+    return 'critical';
+}
+
+// Get needle rotation for gauge (-135deg to +45deg = 180deg range)
+function getNeedleRotation(score) {
+    // 0 = -135deg (left), 50 = -45deg (middle), 100 = +45deg (right)
+    return -135 + (score * 1.8);
+}
+
+// Interpretations for each dimension and zone
 const interpretations = {
     coping: {
         thriving: {
-            range: [21, 25],
-            label: "Thriving",
-            description: "You're managing the emotional side of things well. Whatever strategies you're using, they're working.",
-            suggestions: [
-                "Keep doing what you're doing – it's clearly helping",
-                "Notice what's working so you can draw on it if things get tougher",
-                "You might have some capacity to support others who are struggling"
-            ]
+            description: "You're managing the emotional side really well right now.",
+            action: "Keep doing what you're doing – it's clearly working."
+        },
+        'doing-well': {
+            description: "You're coping well emotionally. Some difficult moments but generally managing.",
+            action: "Keep building on what's helping you cope."
         },
         managing: {
-            range: [13, 20],
-            label: "Managing",
-            description: "You're coping reasonably well, though some days are harder than others. That's completely normal given what you're dealing with.",
-            suggestions: [
-                "Build on whatever's working for you already",
-                "Talk to someone you trust about what you're going through",
-                "Look after the basics – sleep, eating, a bit of fresh air",
-                "Be patient with yourself when it feels harder"
-            ]
+            description: "You're getting by emotionally, though some days are harder than others.",
+            action: "Focus on what helps you get through each day."
         },
         struggling: {
-            range: [5, 12],
-            label: "Struggling",
-            description: "You're finding it really hard to cope emotionally right now. That's completely understandable – what you're facing is genuinely difficult.",
-            suggestions: [
-                "Consider talking to a counsellor or therapist – they can really help",
-                "Speak to your GP about how you're feeling",
-                "Look for support groups with people who understand what you're going through",
-                "Take things one day at a time – that's enough for now",
-                "Please don't hesitate to ask for professional help"
-            ]
+            description: "You're finding it hard to cope emotionally right now.",
+            action: "You need some support with the emotional side of things."
+        },
+        critical: {
+            description: "You're really struggling to cope emotionally.",
+            action: "You need urgent support with how you're feeling."
         }
     },
     practical: {
         thriving: {
-            range: [21, 25],
-            label: "Thriving",
-            description: "You're managing the practical side of things really well. The daily tasks and logistics are under control.",
-            suggestions: [
-                "Keep your systems going – they're working",
-                "You might be able to help others with practical things",
-                "Make a note of what's working in case you need to come back to it"
-            ]
+            description: "Daily life is running smoothly. You're on top of tasks and logistics.",
+            action: "Your systems are working well – keep them going."
+        },
+        'doing-well': {
+            description: "You're handling practical matters well. Most things are under control.",
+            action: "Keep your current routines going."
         },
         managing: {
-            range: [13, 20],
-            label: "Managing",
-            description: "You're handling the essentials, though some things are slipping through the cracks. That's understandable.",
-            suggestions: [
-                "Focus on what absolutely has to get done, let other things wait",
-                "Ask for specific help with practical things – people often want to help but don't know how",
-                "Simple systems help – even just a list on the fridge",
-                "You don't have to do everything – prioritise ruthlessly"
-            ]
+            description: "You're managing the essentials, though some things are slipping.",
+            action: "Focus on what absolutely has to get done."
         },
         struggling: {
-            range: [5, 12],
-            label: "Struggling",
-            description: "The practical side of things is overwhelming right now. You need some help with day-to-day tasks and getting organised.",
-            suggestions: [
-                "Reach out for practical support – family, friends, local services",
-                "Break everything down into really small steps",
-                "Write lists of what needs doing and who might be able to help",
-                "Consider getting professional help – social services, Citizens Advice, financial advisers",
-                "Focus only on absolute essentials for now – everything else can wait"
-            ]
+            description: "Daily tasks and practical matters are overwhelming you.",
+            action: "You need help getting the practical side of things under control."
+        },
+        critical: {
+            description: "You can't keep up with basic daily tasks.",
+            action: "You need urgent practical support right now."
         }
     },
     self: {
         thriving: {
-            range: [21, 25],
-            label: "Thriving",
-            description: "You're holding onto a strong sense of who you are, even through this disruption. That's a real strength.",
-            suggestions: [
-                "Keep doing the things that connect you to yourself",
-                "Your sense of self can be a real anchor for other people too",
-                "Keep nurturing the relationships that matter to you"
-            ]
+            description: "You have a strong sense of who you are and what matters to you.",
+            action: "Keep nurturing the things that connect you to yourself."
+        },
+        'doing-well': {
+            description: "You're maintaining a good sense of who you are.",
+            action: "Keep doing the things that matter to you."
         },
         managing: {
-            range: [13, 20],
-            label: "Managing",
-            description: "Your sense of who you are is holding up, though parts of your identity might feel challenged or uncertain. That's really common.",
-            suggestions: [
-                "Protect time for things that matter to you, even small things",
-                "Stay connected to people who see you as you really are",
-                "Remember that who you are can evolve through difficult times – that's okay",
-                "Look for small ways to express yourself"
-            ]
+            description: "Your sense of self is holding up, though parts feel challenged.",
+            action: "Protect some time for things that are meaningful to you."
         },
         struggling: {
-            range: [5, 12],
-            label: "Struggling",
-            description: "You're feeling quite disconnected from your sense of self right now. Who you are and what matters to you might feel lost or very uncertain.",
-            suggestions: [
-                "This loss of self is really common when life disrupts you – you're not alone in this",
-                "Working with a coach or therapist on rebuilding your sense of identity can genuinely help",
-                "Start very small – just one meaningful thing or one real connection",
-                "Be patient with yourself – your sense of self can be rebuilt, it just takes time",
-                "Connect with others who've faced similar disruptions – they'll understand"
-            ]
+            description: "You're feeling disconnected from who you are and what matters.",
+            action: "You need to reconnect with your sense of self."
+        },
+        critical: {
+            description: "You feel like you've lost yourself completely.",
+            action: "You need support rebuilding your sense of who you are."
         }
     }
 };
