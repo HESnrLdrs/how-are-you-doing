@@ -360,25 +360,25 @@ h2 {
     border-radius: 50%;
 }
 
-/* Red zone: 0-20 (8 o'clock to 9:30) - about 45 degrees */
+/* Red zone: 0-20 (8 o'clock to 10 o'clock) - about 60 degrees */
 .zone-red {
     background: conic-gradient(from 240deg at 50% 50%, 
-        rgba(239, 68, 68, 0.4) 0deg, 
-        transparent 45deg);
+        rgba(239, 68, 68, 0.6) 0deg, 
+        transparent 48deg);
 }
 
-/* Amber zone: 20-60 (9:30 to 12:30) - about 90 degrees */
+/* Amber zone: 20-60 (10 o'clock to 1 o'clock) - about 96 degrees */
 .zone-amber {
-    background: conic-gradient(from 285deg at 50% 50%, 
-        rgba(245, 158, 11, 0.4) 0deg, 
-        transparent 90deg);
+    background: conic-gradient(from 288deg at 50% 50%, 
+        rgba(245, 158, 11, 0.6) 0deg, 
+        transparent 96deg);
 }
 
-/* Green zone: 60-100 (12:30 to 2 o'clock) - about 45 degrees */
+/* Green zone: 60-100 (1 o'clock to 4 o'clock) - about 96 degrees */
 .zone-green {
-    background: conic-gradient(from 375deg at 50% 50%, 
-        rgba(16, 185, 129, 0.4) 0deg, 
-        transparent 45deg);
+    background: conic-gradient(from 384deg at 50% 50%, 
+        rgba(16, 185, 129, 0.6) 0deg, 
+        transparent 96deg);
 }
 
 .gauge-status {
