@@ -237,6 +237,7 @@ const app = {
                     </div>
                     <div class="gauge-status ${isFocus ? 'focus' : ''}">${statusText}</div>
                     ${progressHtml}
+                    <div class="debug-score" style="font-size:0.8rem;color:#999;margin-top:5px;">Score: ${score}</div>
                 </div>
             `;
         }).join('');
