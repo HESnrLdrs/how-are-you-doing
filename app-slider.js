@@ -115,15 +115,56 @@ const app = {
         });
         
         // Calculate averages
-        return {
+        const averages = {
             coping: Math.round(scores.coping.reduce((a, b) => a + b, 0) / scores.coping.length),
             practical: Math.round(scores.practical.reduce((a, b) => a + b, 0) / scores.practical.length),
             self: Math.round(scores.self.reduce((a, b) => a + b, 0) / scores.self.length)
         };
+        
+        return averages;
+    },
+    
+    saveResults(scores) {
+        try {
+            // Get existing history or create new array
+            const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
+            
+            // Add current results with timestamp
+            const entry = {
+                date: new Date().toISOString(),
+                scores: scores
+            };
+            
+            history.push(entry);
+            
+            // Keep only last 10 entries
+            const recentHistory = history.slice(-10);
+            
+            localStorage.setItem('howAreYouDoing_history', JSON.stringify(recentHistory));
+        } catch (e) {
+            console.error('Could not save results:', e);
+        }
+    },
+    
+    getPreviousResults() {
+        try {
+            const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
+            if (history.length > 1) {
+                // Return second-to-last entry (previous session)
+                return history[history.length - 2].scores;
+            }
+        } catch (e) {
+            console.error('Could not load previous results:', e);
+        }
+        return null;
     },
     
     showResults() {
         const scores = this.calculateScores();
+        const previousScores = this.getPreviousResults();
+        
+        // Save current results
+        this.saveResults(scores);
         
         // Find the lowest scoring dimension
         let lowestDimension = 'coping';
@@ -138,7 +179,7 @@ const app = {
         }
         
         // Build gauges
-        this.displayGauges(scores, lowestDimension);
+        this.displayGauges(scores, lowestDimension, previousScores);
         
         // Build interpretation
         this.displayInterpretation(scores, lowestDimension);
@@ -146,7 +187,7 @@ const app = {
         this.showScreen('results-screen');
     },
     
-    displayGauges(scores, lowestDimension) {
+    displayGauges(scores, lowestDimension, previousScores) {
         const container = document.getElementById('gauges-container');
         const dimensions = [
             { key: 'coping', label: 'Coping', icon: '🧠' },
@@ -165,6 +206,20 @@ const app = {
                               zone === 'struggling' ? 'Struggling' :
                               'Critical';
             
+            // Progress indicator if we have previous scores
+            let progressHtml = '';
+            if (previousScores) {
+                const prevScore = previousScores[dim.key];
+                const change = score - prevScore;
+                if (change > 0) {
+                    progressHtml = `<div class="progress-indicator up">↑ +${change}</div>`;
+                } else if (change < 0) {
+                    progressHtml = `<div class="progress-indicator down">↓ ${change}</div>`;
+                } else {
+                    progressHtml = `<div class="progress-indicator same">→ Same</div>`;
+                }
+            }
+            
             return `
                 <div class="gauge-item">
                     <div class="gauge-icon">${dim.icon}</div>
@@ -181,6 +236,7 @@ const app = {
                         <div class="gauge-center"></div>
                     </div>
                     <div class="gauge-status ${isFocus ? 'focus' : ''}">${statusText}</div>
+                    ${progressHtml}
                 </div>
             `;
         }).join('');

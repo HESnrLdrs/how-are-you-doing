@@ -360,22 +360,25 @@ h2 {
     border-radius: 50%;
 }
 
+/* Red zone: 0-20 (8 o'clock to 9:30) - about 45 degrees */
 .zone-red {
-    background: conic-gradient(from 225deg at 50% 50%, 
-        rgba(239, 68, 68, 0.3) 0deg, 
-        transparent 54deg);
+    background: conic-gradient(from 240deg at 50% 50%, 
+        rgba(239, 68, 68, 0.4) 0deg, 
+        transparent 45deg);
 }
 
+/* Amber zone: 20-60 (9:30 to 12:30) - about 90 degrees */
 .zone-amber {
-    background: conic-gradient(from 279deg at 50% 50%, 
-        rgba(245, 158, 11, 0.3) 0deg, 
-        transparent 108deg);
+    background: conic-gradient(from 285deg at 50% 50%, 
+        rgba(245, 158, 11, 0.4) 0deg, 
+        transparent 90deg);
 }
 
+/* Green zone: 60-100 (12:30 to 2 o'clock) - about 45 degrees */
 .zone-green {
-    background: conic-gradient(from 27deg at 50% 50%, 
-        rgba(16, 185, 129, 0.3) 0deg, 
-        transparent 54deg);
+    background: conic-gradient(from 375deg at 50% 50%, 
+        rgba(16, 185, 129, 0.4) 0deg, 
+        transparent 45deg);
 }
 
 .gauge-status {
@@ -389,6 +392,34 @@ h2 {
     color: #dc2626;
     font-weight: 700;
     font-size: 1.1rem;
+}
+
+/* Progress indicators */
+.progress-indicator {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.progress-indicator.up {
+    color: #10b981;
+    background: #f0fdf4;
+    border: 1px solid #10b981;
+}
+
+.progress-indicator.down {
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #ef4444;
+}
+
+.progress-indicator.same {
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
 }
 
 /* Interpretation sections */
