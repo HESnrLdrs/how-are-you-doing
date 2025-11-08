@@ -136,10 +136,10 @@ function getZone(score) {
 
 // Get needle rotation for gauge
 function getNeedleRotation(score) {
-    // Clock positions: E at 8 o'clock (-120deg), 12 o'clock (0deg), F at 4 o'clock (+120deg)
-    // Gauge arc spans from 8 o'clock to 4 o'clock (240 degree arc)
-    // 0 = -120deg (E), 50 = 0deg (12 o'clock), 100 = +120deg (F at 4 o'clock)
-    return -120 + (score * 2.4);
+    // E at 8 o'clock (-120deg), F at 4 o'clock (+120deg)
+    // But needle should point AT F, not past it
+    // Adjust to: 0 = -120deg (E), 100 = +105deg (just reaching F)
+    return -120 + (score * 2.25);
 }
 
 // Interpretations for each dimension and zone
