@@ -184,6 +184,12 @@ const app = {
         // Build interpretation
         this.displayInterpretation(scores, lowestDimension);
         
+        // Show history button if there's history
+        const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
+        if (history.length >= 2) {
+            document.getElementById('history-btn').style.display = 'inline-block';
+        }
+        
         this.showScreen('results-screen');
     },
     
@@ -310,6 +316,164 @@ const app = {
         this.currentQuestion = 0;
         this.responses = {};
         this.showScreen('welcome-screen');
+    },
+    
+    showHistory() {
+        const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
+        if (history.length < 2) {
+            alert('Not enough data yet. Check in a few more times to see your progress!');
+            return;
+        }
+        
+        // Show modal
+        document.getElementById('history-modal').classList.add('active');
+        
+        // Draw chart
+        this.drawProgressChart(history);
+        
+        // Show summary
+        this.showHistorySummary(history);
+    },
+    
+    closeHistory() {
+        document.getElementById('history-modal').classList.remove('active');
+    },
+    
+    drawProgressChart(history) {
+        const canvas = document.getElementById('progress-chart');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 400;
+        
+        const padding = 50;
+        const width = canvas.width - (padding * 2);
+        const height = canvas.height - (padding * 2);
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Extract data
+        const copingData = history.map(entry => entry.scores.coping);
+        const practicalData = history.map(entry => entry.scores.practical);
+        const selfData = history.map(entry => entry.scores.self);
+        
+        // Draw grid
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 5; i++) {
+            const y = padding + (height / 5) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(canvas.width - padding, y);
+            ctx.stroke();
+            
+            // Y-axis labels
+            ctx.fillStyle = '#64748b';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(100 - (i * 20), padding - 10, y + 4);
+        }
+        
+        // Draw axes
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, canvas.height - padding);
+        ctx.lineTo(canvas.width - padding, canvas.height - padding);
+        ctx.stroke();
+        
+        // Helper function to draw line
+        const drawLine = (data, color, label) => {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            data.forEach((value, index) => {
+                const x = padding + (width / (data.length - 1)) * index;
+                const y = canvas.height - padding - (value / 100) * height;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = color;
+            data.forEach((value, index) => {
+                const x = padding + (width / (data.length - 1)) * index;
+                const y = canvas.height - padding - (value / 100) * height;
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        };
+        
+        // Draw lines
+        drawLine(copingData, '#3b82f6', 'Coping');
+        drawLine(practicalData, '#8b5cf6', 'Practical');
+        drawLine(selfData, '#ec4899', 'Self');
+        
+        // Draw legend
+        const legendX = padding + 20;
+        const legendY = padding + 20;
+        
+        ctx.font = 'bold 14px sans-serif';
+        
+        ctx.fillStyle = '#3b82f6';
+        ctx.fillRect(legendX, legendY, 20, 3);
+        ctx.fillStyle = '#1e293b';
+        ctx.fillText('Coping', legendX + 30, legendY + 4);
+        
+        ctx.fillStyle = '#8b5cf6';
+        ctx.fillRect(legendX, legendY + 25, 20, 3);
+        ctx.fillStyle = '#1e293b';
+        ctx.fillText('Practical', legendX + 30, legendY + 29);
+        
+        ctx.fillStyle = '#ec4899';
+        ctx.fillRect(legendX, legendY + 50, 20, 3);
+        ctx.fillStyle = '#1e293b';
+        ctx.fillText('Self', legendX + 30, legendY + 54);
+    },
+    
+    showHistorySummary(history) {
+        const first = history[0].scores;
+        const latest = history[history.length - 1].scores;
+        
+        const copingChange = latest.coping - first.coping;
+        const practicalChange = latest.practical - first.practical;
+        const selfChange = latest.self - first.self;
+        
+        const formatChange = (change) => {
+            if (change > 0) return `<span style="color:#10b981">↑ +${change}</span>`;
+            if (change < 0) return `<span style="color:#ef4444">↓ ${change}</span>`;
+            return '<span style="color:#64748b">→ No change</span>';
+        };
+        
+        const formatDate = (isoDate) => {
+            const date = new Date(isoDate);
+            return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        };
+        
+        const summary = `
+            <h3>Your Journey</h3>
+            <p><strong>Started:</strong> ${formatDate(history[0].date)}</p>
+            <p><strong>Check-ins:</strong> ${history.length} sessions</p>
+            <p><strong>Overall change since first check-in:</strong></p>
+            <ul style="list-style:none; padding-left:0;">
+                <li>Coping: ${formatChange(copingChange)}</li>
+                <li>Practical: ${formatChange(practicalChange)}</li>
+                <li>Self: ${formatChange(selfChange)}</li>
+            </ul>
+        `;
+        
+        document.getElementById('history-summary').innerHTML = summary;
     }
 };
 
