@@ -136,78 +136,78 @@ function getZone(score) {
 
 // Get needle rotation for gauge
 function getNeedleRotation(score) {
-    // E at 8 o'clock (-120deg), F at 4 o'clock (+120deg)
-    // But needle should point AT F, not past it
-    // Adjust to: 0 = -120deg (E), 100 = +105deg (just reaching F)
-    return -120 + (score * 2.25);
+    // E at 8 o'clock (-120deg), F at 4 o'clock (right side, bottom)
+    // F label is at "right: 15px, bottom: 35px" which is about +115deg
+    // 0 = -120deg (AT E), 100 = +115deg (AT F)
+    return -120 + (score * 2.35);
 }
 
 // Interpretations for each dimension and zone
 const interpretations = {
     coping: {
-        thriving: {
-            description: "You're managing the emotional side really well right now.",
-            action: "Keep doing what you're doing – it's clearly working."
-        },
-        'doing-well': {
-            description: "You're coping well emotionally. Some difficult moments but generally managing.",
-            action: "Keep building on what's helping you cope."
-        },
-        managing: {
-            description: "You're getting by emotionally, though some days are harder than others.",
-            action: "Focus on what helps you get through each day."
+        critical: {
+            description: "You're in real difficulty emotionally right now. This is serious and you need support.",
+            action: "Please contact your GP today. If it's out of hours, call 111. If you're in crisis right now, call Samaritans on 116 123 (available 24/7). You need support - this is too much to handle alone."
         },
         struggling: {
-            description: "You're finding it hard to cope emotionally right now.",
-            action: "You need some support with the emotional side of things."
+            description: "You're finding it very hard to cope emotionally. The feelings are overwhelming most of the time.",
+            action: "Talk to your GP about how you're feeling - they can help. Consider counselling or therapy. Speak to someone you trust about what you're going through. You don't have to cope with this alone."
         },
-        critical: {
-            description: "You're really struggling to cope emotionally.",
-            action: "You need urgent support with how you're feeling."
+        managing: {
+            description: "You're getting by emotionally, though some days are much harder than others. That's completely normal when life is difficult.",
+            action: "Keep doing whatever's helping you get through each day. Talk to someone you trust when things feel tough. Your GP can point you to support services if you need them."
+        },
+        'doing-well': {
+            description: "You're coping well emotionally. You have some difficult moments but you're managing your feelings reasonably well.",
+            action: "Whatever you're doing is working - keep it up. Stay connected to people who support you. Keep an eye on your emotional wellbeing as things change."
+        },
+        thriving: {
+            description: "You're managing the emotional side really well. Whatever strategies you're using, they're working.",
+            action: "Keep doing what you're doing. You might be able to support others who are struggling emotionally."
         }
     },
     practical: {
-        thriving: {
-            description: "Daily life is running smoothly. You're on top of tasks and logistics.",
-            action: "Your systems are working well – keep them going."
-        },
-        'doing-well': {
-            description: "You're handling practical matters well. Most things are under control.",
-            action: "Keep your current routines going."
-        },
-        managing: {
-            description: "You're managing the essentials, though some things are slipping.",
-            action: "Focus on what absolutely has to get done."
+        critical: {
+            description: "Daily life has become unmanageable. You can't keep up with even basic tasks right now.",
+            action: "You need practical help urgently. Ask family or friends for specific help (shopping, appointments, meals). Contact local support services. Speak to your GP about practical support options. You can't do this alone right now - that's okay."
         },
         struggling: {
-            description: "Daily tasks and practical matters are overwhelming you.",
-            action: "You need help getting the practical side of things under control."
+            description: "The practical side of things is overwhelming you. Daily tasks feel impossible and things are piling up.",
+            action: "Break everything down into really small steps. Ask for specific practical help - people want to help but need to know what you need. Focus only on what absolutely has to get done today. Let other things wait."
         },
-        critical: {
-            description: "You can't keep up with basic daily tasks.",
-            action: "You need urgent practical support right now."
+        managing: {
+            description: "You're handling the essentials, though some things are slipping through the cracks. You're keeping your head above water.",
+            action: "Focus on what absolutely has to get done - let other things wait. It's okay if some things aren't perfect right now. Ask for help with specific practical tasks when you need it."
+        },
+        'doing-well': {
+            description: "You're handling practical matters well. Most things are under control and you're managing your commitments.",
+            action: "Keep your current systems going - they're working. Stay organized and don't take on too much extra. You're doing well."
+        },
+        thriving: {
+            description: "Daily life is running smoothly. You're on top of tasks, logistics, and commitments.",
+            action: "Your systems are working really well. You might be able to help others with practical things they're struggling with."
         }
     },
     self: {
-        thriving: {
-            description: "You have a strong sense of who you are and what matters to you.",
-            action: "Keep nurturing the things that connect you to yourself."
-        },
-        'doing-well': {
-            description: "You're maintaining a good sense of who you are.",
-            action: "Keep doing the things that matter to you."
-        },
-        managing: {
-            description: "Your sense of self is holding up, though parts feel challenged.",
-            action: "Protect some time for things that are meaningful to you."
+        critical: {
+            description: "You feel like you've lost yourself completely. Who you are and what matters to you feels completely gone.",
+            action: "This disconnection is serious but recoverable with help. Talk to your GP about how you're feeling. Consider counselling or coaching support. Reach out to someone who knows you well and can remind you of who you are."
         },
         struggling: {
-            description: "You're feeling disconnected from who you are and what matters.",
-            action: "You need to reconnect with your sense of self."
+            description: "You're feeling very disconnected from who you are. What used to matter feels meaningless and you don't recognize yourself.",
+            action: "Start very small - do one tiny thing that used to matter to you, even if it feels pointless. Talk to someone who knew you before this disruption. Consider working with a coach or therapist on rebuilding your sense of self. This takes time."
         },
-        critical: {
-            description: "You feel like you've lost yourself completely.",
-            action: "You need support rebuilding your sense of who you are."
+        managing: {
+            description: "Your sense of who you are is holding up, though parts feel challenged or uncertain. Some days you feel like yourself, other days less so.",
+            action: "Protect some time for things that matter to you, even small things. Stay connected to people who see you as you really are. It's okay if your sense of self is shifting - that's normal during disruption."
+        },
+        'doing-well': {
+            description: "You're maintaining a good sense of who you are. Your values and what matters to you are still clear, even if everything else is changing.",
+            action: "Keep doing the things that connect you to yourself. Keep nurturing relationships that remind you of who you are. Your sense of self is a real strength right now."
+        },
+        thriving: {
+            description: "You have a strong, clear sense of who you are and what matters to you. Your identity feels solid despite any disruption.",
+            action: "Your sense of self is a real asset. Keep doing what connects you to who you are. You might be able to help others who are feeling lost right now."
         }
     }
 };

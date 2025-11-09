@@ -137,8 +137,8 @@ const app = {
             
             history.push(entry);
             
-            // Keep only last 10 entries
-            const recentHistory = history.slice(-10);
+            // Keep last 26 entries (roughly 6 months of weekly check-ins)
+            const recentHistory = history.slice(-26);
             
             localStorage.setItem('howAreYouDoing_history', JSON.stringify(recentHistory));
         } catch (e) {
@@ -211,12 +211,24 @@ const app = {
             if (previousScores) {
                 const prevScore = previousScores[dim.key];
                 const change = score - prevScore;
+                const prevZone = getZone(prevScore);
+                
                 if (change > 0) {
-                    progressHtml = `<div class="progress-indicator up">↑ +${change}</div>`;
+                    let celebration = '';
+                    if (change >= 20) {
+                        celebration = ' - Significant progress!';
+                    } else if (change >= 10) {
+                        celebration = ' - Real improvement!';
+                    } else if (zone !== prevZone && (zone === 'managing' || zone === 'doing-well' || zone === 'thriving')) {
+                        celebration = ' - You\'ve moved up a level!';
+                    }
+                    progressHtml = `<div class="progress-indicator up">↑ +${change}${celebration}</div>`;
                 } else if (change < 0) {
-                    progressHtml = `<div class="progress-indicator down">↓ ${change}</div>`;
+                    const dip = Math.abs(change);
+                    let message = dip > 10 ? ' - Worth noting' : ' - A small dip, that\'s normal';
+                    progressHtml = `<div class="progress-indicator down">↓ ${change}${message}</div>`;
                 } else {
-                    progressHtml = `<div class="progress-indicator same">→ Same</div>`;
+                    progressHtml = `<div class="progress-indicator same">→ Holding steady</div>`;
                 }
             }
             
