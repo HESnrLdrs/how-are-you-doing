@@ -91,14 +91,10 @@ const app = {
         const slider = document.getElementById('response-slider');
         this.responses[question.id] = parseInt(slider.value);
         
-        console.log('Current question:', this.currentQuestion, 'Total:', this.shuffledQuestions.length);
-        console.log('All responses:', this.responses);
-        
         if (this.currentQuestion < this.shuffledQuestions.length - 1) {
             this.currentQuestion++;
             this.displayQuestion();
         } else {
-            console.log('Showing results...');
             this.showResults();
         }
     },
@@ -110,20 +106,14 @@ const app = {
             personal: []
         };
         
-        console.log('Calculating scores from responses:', this.responses);
-        console.log('Questions:', this.shuffledQuestions);
-        
         // Group responses by dimension (handle both 'self' and 'personal' for backwards compatibility)
         this.shuffledQuestions.forEach(question => {
             const response = this.responses[question.id];
-            console.log(`Question ${question.id} (${question.dimension}):`, response);
             if (response !== undefined) {
                 const dim = question.dimension === 'self' ? 'personal' : question.dimension;
                 scores[dim].push(response);
             }
         });
-        
-        console.log('Grouped scores:', scores);
         
         // Calculate averages
         const averages = {
@@ -132,24 +122,7 @@ const app = {
             personal: Math.round(scores.personal.reduce((a, b) => a + b, 0) / scores.personal.length)
         };
         
-        console.log('Calculated averages:', averages);
-        
         return averages;
-    },
-    
-    calculateOverallScore(scores) {
-        // Using multiplier: (C × P × P) ÷ 10,000
-        // This ensures that weakness in any area significantly impacts overall score
-        const overall = (scores.coping * scores.practical * scores.personal) / 10000;
-        return Math.round(overall);
-    },
-    
-    getOverallMessage(score) {
-        if (score >= 80) return { emoji: '🌟', text: 'You\'re doing well overall', color: '#10b981' };
-        if (score >= 60) return { emoji: '👍', text: 'Managing, with some challenges', color: '#3b82f6' };
-        if (score >= 40) return { emoji: '⚠️', text: 'Struggling in important areas', color: '#f59e0b' };
-        if (score >= 20) return { emoji: '🆘', text: 'Significant difficulty - consider support', color: '#ef4444' };
-        return { emoji: '🚨', text: 'Crisis level - please reach out for help', color: '#dc2626' };
     },
     
     saveResults(scores) {
@@ -216,9 +189,6 @@ const app = {
         
         // Build interpretation
         this.displayInterpretation(scores, lowestDimension);
-        
-        // Display overall score
-        this.displayOverallScore(scores);
         
         // Show history button if there's history
         const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
@@ -331,10 +301,6 @@ const app = {
         const interpretation = interpretations[lowestDimension][zone];
         
         // Build summary for all three
-        const copingZone = getZone(scores.coping);
-        const practicalZone = getZone(scores.practical);
-        const personalZone = getZone(scores.personal);
-        
         let summaryHtml = '<div class="interpretation">';
         summaryHtml += '<h2>What This Means</h2>';
         
@@ -361,34 +327,6 @@ const app = {
         `;
         
         document.getElementById('interpretation-area').innerHTML = summaryHtml;
-    },
-    
-    displayOverallScore(scores) {
-        console.log('displayOverallScore called with:', scores);
-        const overallScore = this.calculateOverallScore(scores);
-        console.log('Overall score calculated:', overallScore);
-        const message = this.getOverallMessage(overallScore);
-        console.log('Message:', message);
-        
-        const overallHtml = `
-            <div class="overall-score" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border: 2px solid #cbd5e1;">
-                <h2 style="text-align: center; margin-bottom: 20px; color: #1e293b;">Overall Wellbeing</h2>
-                <div style="text-align: center;">
-                    <div style="font-size: 4rem; margin-bottom: 10px;">${message.emoji}</div>
-                    <div style="font-size: 3rem; font-weight: bold; color: ${message.color}; margin-bottom: 10px;">${overallScore}/100</div>
-                    <div style="font-size: 1.2rem; color: #475569;">${message.text}</div>
-                </div>
-                <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; font-size: 0.9rem; color: #64748b;">
-                    <p style="margin: 0;"><strong>About this score:</strong> This reflects how your three areas work together. Even if some areas are strong, struggling in one dimension significantly impacts how you feel overall - which matches real life experience.</p>
-                </div>
-            </div>
-        `;
-        
-        console.log('Setting innerHTML for overall-score-area');
-        const element = document.getElementById('overall-score-area');
-        console.log('Element found:', element);
-        element.innerHTML = overallHtml;
-        console.log('innerHTML set');
     },
     
     restart() {
