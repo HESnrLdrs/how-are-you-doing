@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Are You Doing? - UPDATED VERSION NOV 10</title>
+    <link rel="stylesheet" href="styles-slider.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="content-box">
+                <h1>How Are You Doing?</h1>
+                <p class="subtitle">A quick check-in on where you are right now</p>
+                
+                <div class="intro-text">
+                    <p>Whether you're navigating a major disruption or just want to take stock of how things are going, this quick check-in helps you see where you are.</p>
+                    
+                    <p>Simply position each slider where you feel you are right now. No right or wrong answers – just your honest sense of where things stand.</p>
+                    
+                    <p>We'll look at three areas:</p>
+                    
+                    <div class="framework-overview">
+                        <div class="framework-item">
+                            <strong>Coping:</strong> How you're managing emotionally
+                        </div>
+                        <div class="framework-item">
+                            <strong>Practical:</strong> How you're handling daily life
+                        </div>
+                        <div class="framework-item">
+                            <strong>Personal:</strong> How connected you feel to who you are
+                        </div>
+                    </div>
+                    
+                    <p><strong>Takes about 5 minutes.</strong></p>
+                    <p><strong>Check in weekly</strong> to see your progress over time.</p>
+                    <p><strong>Your privacy:</strong> Everything stays on your device, nowhere else.</p>
+                    
+                    <p style="font-size: 0.9rem; color: #64748b; margin-top: 20px;"><em>This is a self-reflection tool, not a diagnostic instrument. It doesn't replace professional advice. If you're in crisis, please contact your GP, call 111, or call Samaritans on 116 123.</em></p>
+                </div>
+                
+                <button class="btn-primary" onclick="app.startAssessment()">Start</button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    Question <span id="current-q">1</span> of <span id="total-q">15</span>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2 id="question-text">Question text will appear here</h2>
+                
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span class="label-left" id="label-left">Struggling</span>
+                        <span class="label-right" id="label-right">Thriving</span>
+                    </div>
+                    <input type="range" 
+                           id="response-slider" 
+                           class="response-slider" 
+                           min="0" 
+                           max="100" 
+                           value="50">
+                    <div class="slider-marker" id="slider-marker"></div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn-secondary" onclick="app.previousQuestion()" id="prev-btn">Previous</button>
+                    <button class="btn-primary" onclick="app.nextQuestion()" id="next-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="content-box">
+                <h1>How You're Doing Right Now</h1>
+                <p class="subtitle">Here's what your responses show</p>
+                
+                <div class="gauges-container" id="gauges-container">
+                    <!-- Gauges will be inserted here by JavaScript -->
+                </div>
+                
+                <div id="interpretation-area">
+                    <!-- Interpretation will be inserted here -->
+                </div>
+                
+                <!-- ⭐ OVERALL SCORE SECTION - THIS IS THE NEW BIT ⭐ -->
+                <div id="overall-score-area">
+                    <!-- Overall score will be inserted here by JavaScript -->
+                </div>
+                <!-- ⭐ END OF OVERALL SCORE SECTION ⭐ -->
+                
+                <div class="action-buttons">
+                    <button class="btn-secondary" onclick="window.print()">Save Results</button>
+                    <button class="btn-secondary" onclick="app.showHistory()" id="history-btn" style="display:none;">View Your Progress</button>
+                    <button class="btn-primary" onclick="app.restart()">Take Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="app.closeHistory()">&times;</span>
+                <h2>Your Progress Over Time</h2>
+                <canvas id="progress-chart"></canvas>
+                <div id="history-summary"></div>
+                <button class="btn-primary" onclick="app.closeHistory()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Paul Thomas Coaching Ltd. All rights reserved.</p>
+    </footer>
+
+    <script src="questions-slider.js"></script>
+    <script src="app-slider.js"></script>
+</body>
+</html>
