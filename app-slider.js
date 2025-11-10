@@ -103,14 +103,15 @@ const app = {
         const scores = {
             coping: [],
             practical: [],
-            self: []
+            personal: []
         };
         
-        // Group responses by dimension
+        // Group responses by dimension (handle both 'self' and 'personal' for backwards compatibility)
         this.shuffledQuestions.forEach(question => {
             const response = this.responses[question.id];
             if (response !== undefined) {
-                scores[question.dimension].push(response);
+                const dim = question.dimension === 'self' ? 'personal' : question.dimension;
+                scores[dim].push(response);
             }
         });
         
@@ -118,10 +119,25 @@ const app = {
         const averages = {
             coping: Math.round(scores.coping.reduce((a, b) => a + b, 0) / scores.coping.length),
             practical: Math.round(scores.practical.reduce((a, b) => a + b, 0) / scores.practical.length),
-            self: Math.round(scores.self.reduce((a, b) => a + b, 0) / scores.self.length)
+            personal: Math.round(scores.personal.reduce((a, b) => a + b, 0) / scores.personal.length)
         };
         
         return averages;
+    },
+    
+    calculateOverallScore(scores) {
+        // Using multiplier: (C × P × P) ÷ 10,000
+        // This ensures that weakness in any area significantly impacts overall score
+        const overall = (scores.coping * scores.practical * scores.personal) / 10000;
+        return Math.round(overall);
+    },
+    
+    getOverallMessage(score) {
+        if (score >= 80) return { emoji: '🌟', text: 'You\'re doing well overall', color: '#10b981' };
+        if (score >= 60) return { emoji: '👍', text: 'Managing, with some challenges', color: '#3b82f6' };
+        if (score >= 40) return { emoji: '⚠️', text: 'Struggling in important areas', color: '#f59e0b' };
+        if (score >= 20) return { emoji: '🆘', text: 'Significant difficulty - consider support', color: '#ef4444' };
+        return { emoji: '🚨', text: 'Crisis level - please reach out for help', color: '#dc2626' };
     },
     
     saveResults(scores) {
@@ -151,7 +167,12 @@ const app = {
             const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
             if (history.length > 1) {
                 // Return second-to-last entry (previous session)
-                return history[history.length - 2].scores;
+                const prevScores = history[history.length - 2].scores;
+                // Handle transition from 'self' to 'personal'
+                if (prevScores.self !== undefined && prevScores.personal === undefined) {
+                    prevScores.personal = prevScores.self;
+                }
+                return prevScores;
             }
         } catch (e) {
             console.error('Could not load previous results:', e);
@@ -173,9 +194,9 @@ const app = {
             lowestDimension = 'practical';
             lowestScore = scores.practical;
         }
-        if (scores.self < lowestScore) {
-            lowestDimension = 'self';
-            lowestScore = scores.self;
+        if (scores.personal < lowestScore) {
+            lowestDimension = 'personal';
+            lowestScore = scores.personal;
         }
         
         // Build gauges
@@ -183,6 +204,9 @@ const app = {
         
         // Build interpretation
         this.displayInterpretation(scores, lowestDimension);
+        
+        // Display overall score
+        this.displayOverallScore(scores);
         
         // Show history button if there's history
         const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
@@ -198,7 +222,7 @@ const app = {
         const dimensions = [
             { key: 'coping', label: 'Coping', icon: '🧠' },
             { key: 'practical', label: 'Practical', icon: '📋' },
-            { key: 'self', label: 'Self', icon: '💫' }
+            { key: 'personal', label: 'Personal', icon: '💫' }
         ];
         
         container.innerHTML = dimensions.map(dim => {
@@ -221,17 +245,32 @@ const app = {
                 
                 if (change > 0) {
                     let celebration = '';
-                    if (change >= 20) {
-                        celebration = ' - Significant progress!';
-                    } else if (change >= 10) {
+                    if (change >= 50) {
+                        celebration = ' - Remarkable progress!';
+                    } else if (change >= 30) {
+                        celebration = ' - Major improvement!';
+                    } else if (change >= 15) {
                         celebration = ' - Real improvement!';
+                    } else if (change >= 5) {
+                        celebration = ' - Good progress!';
                     } else if (zone !== prevZone && (zone === 'managing' || zone === 'doing-well' || zone === 'thriving')) {
                         celebration = ' - You\'ve moved up a level!';
                     }
                     progressHtml = `<div class="progress-indicator up">↑ +${change}${celebration}</div>`;
                 } else if (change < 0) {
                     const dip = Math.abs(change);
-                    let message = dip > 10 ? ' - Worth noting' : ' - A small dip, that\'s normal';
+                    let message = '';
+                    if (dip >= 50) {
+                        message = ' - Significant concern, consider seeking support';
+                    } else if (dip >= 30) {
+                        message = ' - Major change, worth serious attention';
+                    } else if (dip >= 15) {
+                        message = ' - Notable decline, keep an eye on this';
+                    } else if (dip >= 5) {
+                        message = ' - Slight decrease';
+                    } else {
+                        message = ' - Small dip, that\'s normal';
+                    }
                     progressHtml = `<div class="progress-indicator down">↓ ${change}${message}</div>`;
                 } else {
                     progressHtml = `<div class="progress-indicator same">→ Holding steady</div>`;
@@ -282,13 +321,13 @@ const app = {
         // Build summary for all three
         const copingZone = getZone(scores.coping);
         const practicalZone = getZone(scores.practical);
-        const selfZone = getZone(scores.self);
+        const personalZone = getZone(scores.personal);
         
         let summaryHtml = '<div class="interpretation">';
         summaryHtml += '<h2>What This Means</h2>';
         
         // Add interpretation for each dimension
-        ['coping', 'practical', 'self'].forEach(dim => {
+        ['coping', 'practical', 'personal'].forEach(dim => {
             const dimZone = getZone(scores[dim]);
             const dimLabel = dim.charAt(0).toUpperCase() + dim.slice(1);
             summaryHtml += `<p><strong>${dimLabel}:</strong> ${interpretations[dim][dimZone].description}</p>`;
@@ -310,6 +349,27 @@ const app = {
         `;
         
         document.getElementById('interpretation-area').innerHTML = summaryHtml;
+    },
+    
+    displayOverallScore(scores) {
+        const overallScore = this.calculateOverallScore(scores);
+        const message = this.getOverallMessage(overallScore);
+        
+        const overallHtml = `
+            <div class="overall-score" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border: 2px solid #cbd5e1;">
+                <h2 style="text-align: center; margin-bottom: 20px; color: #1e293b;">Overall Wellbeing</h2>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">${message.emoji}</div>
+                    <div style="font-size: 3rem; font-weight: bold; color: ${message.color}; margin-bottom: 10px;">${overallScore}/100</div>
+                    <div style="font-size: 1.2rem; color: #475569;">${message.text}</div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; font-size: 0.9rem; color: #64748b;">
+                    <p style="margin: 0;"><strong>About this score:</strong> This reflects how your three areas work together. Even if some areas are strong, struggling in one dimension significantly impacts how you feel overall - which matches real life experience.</p>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('overall-score-area').innerHTML = overallHtml;
     },
     
     restart() {
@@ -354,10 +414,10 @@ const app = {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Extract data
+        // Extract data (handle both 'self' and 'personal' for backwards compatibility)
         const copingData = history.map(entry => entry.scores.coping);
         const practicalData = history.map(entry => entry.scores.practical);
-        const selfData = history.map(entry => entry.scores.self);
+        const personalData = history.map(entry => entry.scores.personal !== undefined ? entry.scores.personal : entry.scores.self);
         
         // Draw grid
         ctx.strokeStyle = '#e2e8f0';
@@ -418,7 +478,7 @@ const app = {
         // Draw lines
         drawLine(copingData, '#3b82f6', 'Coping');
         drawLine(practicalData, '#8b5cf6', 'Practical');
-        drawLine(selfData, '#ec4899', 'Self');
+        drawLine(personalData, '#ec4899', 'Personal');
         
         // Draw legend
         const legendX = padding + 20;
@@ -439,16 +499,20 @@ const app = {
         ctx.fillStyle = '#ec4899';
         ctx.fillRect(legendX, legendY + 50, 20, 3);
         ctx.fillStyle = '#1e293b';
-        ctx.fillText('Self', legendX + 30, legendY + 54);
+        ctx.fillText('Personal', legendX + 30, legendY + 54);
     },
     
     showHistorySummary(history) {
         const first = history[0].scores;
         const latest = history[history.length - 1].scores;
         
+        // Handle transition from 'self' to 'personal'
+        const firstPersonal = first.personal !== undefined ? first.personal : first.self;
+        const latestPersonal = latest.personal !== undefined ? latest.personal : latest.self;
+        
         const copingChange = latest.coping - first.coping;
         const practicalChange = latest.practical - first.practical;
-        const selfChange = latest.self - first.self;
+        const personalChange = latestPersonal - firstPersonal;
         
         const formatChange = (change) => {
             if (change > 0) return `<span style="color:#10b981">↑ +${change}</span>`;
@@ -469,7 +533,7 @@ const app = {
             <ul style="list-style:none; padding-left:0;">
                 <li>Coping: ${formatChange(copingChange)}</li>
                 <li>Practical: ${formatChange(practicalChange)}</li>
-                <li>Self: ${formatChange(selfChange)}</li>
+                <li>Personal: ${formatChange(personalChange)}</li>
             </ul>
         `;
         
