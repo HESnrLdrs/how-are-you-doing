@@ -1,6 +1,6 @@
 // Slider-based questions for How Are You Doing?
 // Each question gets a 0-100 slider response
-// Dimensions: Coping (5q), Practical (5q), Self (5q)
+// Dimensions: Coping (5q), Practical (5q), Personal (5q)
 
 const questions = [
     // COPING QUESTIONS
@@ -77,38 +77,38 @@ const questions = [
         rightLabel: "Well organised"
     },
     
-    // SELF QUESTIONS
+    // PERSONAL QUESTIONS
     {
         id: 11,
-        dimension: "self",
+        dimension: "personal",
         text: "Can you still do the things that are important to you?",
         leftLabel: "Can't do them",
         rightLabel: "Still doing them"
     },
     {
         id: 12,
-        dimension: "self",
+        dimension: "personal",
         text: "Are you able to do things that matter to you?",
         leftLabel: "Nothing meaningful",
         rightLabel: "Doing what matters"
     },
     {
         id: 13,
-        dimension: "self",
+        dimension: "personal",
         text: "How do you feel about your relationships?",
         leftLabel: "Disconnected",
         rightLabel: "Strong connections"
     },
     {
         id: 14,
-        dimension: "self",
+        dimension: "personal",
         text: "Do you have a sense of purpose right now?",
         leftLabel: "No purpose",
         rightLabel: "Clear purpose"
     },
     {
         id: 15,
-        dimension: "self",
+        dimension: "personal",
         text: "How much control do you feel you have?",
         leftLabel: "No control",
         rightLabel: "Good control"
@@ -188,7 +188,7 @@ const interpretations = {
             action: "Your systems are working really well. You might be able to help others with practical things they're struggling with."
         }
     },
-    self: {
+    personal: {
         critical: {
             description: "You feel like you've lost yourself completely. Who you are and what matters to you feels completely gone.",
             action: "This disconnection is serious but recoverable with help. Talk to your GP about how you're feeling. Consider counselling or coaching support. Reach out to someone who knows you well and can remind you of who you are."
