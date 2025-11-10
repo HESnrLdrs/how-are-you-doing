@@ -91,10 +91,14 @@ const app = {
         const slider = document.getElementById('response-slider');
         this.responses[question.id] = parseInt(slider.value);
         
+        console.log('Current question:', this.currentQuestion, 'Total:', this.shuffledQuestions.length);
+        console.log('All responses:', this.responses);
+        
         if (this.currentQuestion < this.shuffledQuestions.length - 1) {
             this.currentQuestion++;
             this.displayQuestion();
         } else {
+            console.log('Showing results...');
             this.showResults();
         }
     },
@@ -106,14 +110,20 @@ const app = {
             personal: []
         };
         
+        console.log('Calculating scores from responses:', this.responses);
+        console.log('Questions:', this.shuffledQuestions);
+        
         // Group responses by dimension (handle both 'self' and 'personal' for backwards compatibility)
         this.shuffledQuestions.forEach(question => {
             const response = this.responses[question.id];
+            console.log(`Question ${question.id} (${question.dimension}):`, response);
             if (response !== undefined) {
                 const dim = question.dimension === 'self' ? 'personal' : question.dimension;
                 scores[dim].push(response);
             }
         });
+        
+        console.log('Grouped scores:', scores);
         
         // Calculate averages
         const averages = {
@@ -121,6 +131,8 @@ const app = {
             practical: Math.round(scores.practical.reduce((a, b) => a + b, 0) / scores.practical.length),
             personal: Math.round(scores.personal.reduce((a, b) => a + b, 0) / scores.personal.length)
         };
+        
+        console.log('Calculated averages:', averages);
         
         return averages;
     },
