@@ -364,8 +364,11 @@ const app = {
     },
     
     displayOverallScore(scores) {
+        console.log('displayOverallScore called with:', scores);
         const overallScore = this.calculateOverallScore(scores);
+        console.log('Overall score calculated:', overallScore);
         const message = this.getOverallMessage(overallScore);
+        console.log('Message:', message);
         
         const overallHtml = `
             <div class="overall-score" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border: 2px solid #cbd5e1;">
@@ -381,7 +384,11 @@ const app = {
             </div>
         `;
         
-        document.getElementById('overall-score-area').innerHTML = overallHtml;
+        console.log('Setting innerHTML for overall-score-area');
+        const element = document.getElementById('overall-score-area');
+        console.log('Element found:', element);
+        element.innerHTML = overallHtml;
+        console.log('innerHTML set');
     },
     
     restart() {
