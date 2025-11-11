@@ -408,11 +408,7 @@ const app = {
             ctx.lineTo(canvas.width - padding, y);
             ctx.stroke();
             
-            // Y-axis labels
-            ctx.fillStyle = '#64748b';
-            ctx.font = '12px sans-serif';
-            ctx.textAlign = 'right';
-            ctx.fillText(100 - (i * 20), padding - 10, y + 4);
+            // Y-axis labels removed - cleaner look
         }
         
         // Draw axes
