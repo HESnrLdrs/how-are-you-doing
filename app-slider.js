@@ -186,6 +186,9 @@ const app = {
         
         // Check if all scores are equal
         const allEqual = (scores.coping === scores.practical && scores.practical === scores.personal);
+        console.log('Scores:', scores);
+        console.log('All equal?', allEqual);
+        console.log('Lowest dimension:', lowestDimension);
         
         // Build gauges
         this.displayGauges(scores, lowestDimension, previousScores, allEqual);
@@ -505,7 +508,7 @@ const app = {
             <h3>Your Journey</h3>
             <p><strong>Started:</strong> ${formatDate(history[0].date)}</p>
             <p><strong>Check-ins:</strong> ${history.length} sessions</p>
-            <p><strong>Overall change since first check-in:</strong></p>
+            <p><strong>Change since you started:</strong></p>
             <ul style="list-style:none; padding-left:0;">
                 <li>Coping: ${formatChange(copingChange)}</li>
                 <li>Practical: ${formatChange(practicalChange)}</li>
