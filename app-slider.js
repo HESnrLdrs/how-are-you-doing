@@ -332,7 +332,9 @@ const app = {
     restart() {
         this.currentQuestion = 0;
         this.responses = {};
-        this.showScreen('welcome-screen');
+        this.shuffledQuestions = shuffleArray(questions);
+        this.showScreen('question-screen');
+        this.displayQuestion();
     },
     
     showHistory() {
@@ -360,11 +362,11 @@ const app = {
         const canvas = document.getElementById('progress-chart');
         const ctx = canvas.getContext('2d');
         
-        // Set canvas size
+        // Set canvas size - increased height for better spacing
         canvas.width = canvas.offsetWidth;
-        canvas.height = 400;
+        canvas.height = 500;
         
-        const padding = 50;
+        const padding = 60;
         const width = canvas.width - (padding * 2);
         const height = canvas.height - (padding * 2);
         
