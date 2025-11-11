@@ -184,11 +184,14 @@ const app = {
             lowestScore = scores.personal;
         }
         
+        // Check if all scores are equal
+        const allEqual = (scores.coping === scores.practical && scores.practical === scores.personal);
+        
         // Build gauges
-        this.displayGauges(scores, lowestDimension, previousScores);
+        this.displayGauges(scores, lowestDimension, previousScores, allEqual);
         
         // Build interpretation
-        this.displayInterpretation(scores, lowestDimension);
+        this.displayInterpretation(scores, lowestDimension, allEqual);
         
         // Show history button if there's history
         const history = JSON.parse(localStorage.getItem('howAreYouDoing_history') || '[]');
@@ -199,7 +202,7 @@ const app = {
         this.showScreen('results-screen');
     },
     
-    displayGauges(scores, lowestDimension, previousScores) {
+    displayGauges(scores, lowestDimension, previousScores, allEqual = false) {
         const container = document.getElementById('gauges-container');
         const dimensions = [
             { key: 'coping', label: 'Coping', icon: '🧠' },
@@ -211,7 +214,7 @@ const app = {
             const score = scores[dim.key];
             const zone = getZone(score);
             const rotation = getNeedleRotation(score);
-            const isFocus = dim.key === lowestDimension;
+            const isFocus = !allEqual && dim.key === lowestDimension;
             const statusText = zone === 'thriving' ? 'Thriving' : 
                               zone === 'doing-well' ? 'Doing well' :
                               zone === 'managing' ? 'Managing' : 
@@ -296,7 +299,7 @@ const app = {
         }, 100);
     },
     
-    displayInterpretation(scores, lowestDimension) {
+    displayInterpretation(scores, lowestDimension, allEqual = false) {
         const zone = getZone(scores[lowestDimension]);
         const interpretation = interpretations[lowestDimension][zone];
         
@@ -313,18 +316,32 @@ const app = {
         
         summaryHtml += '</div>';
         
-        // Focus area
-        const focusLabel = lowestDimension.charAt(0).toUpperCase() + lowestDimension.slice(1);
-        summaryHtml += `
-            <div class="focus-area">
-                <h2>Your Focus: ${focusLabel}</h2>
-                <p>${interpretation.description}</p>
-                <div class="action-box">
-                    <h3>What To Do:</h3>
-                    <p>${interpretation.action}</p>
+        // Only show focus area if scores are NOT all equal
+        if (!allEqual) {
+            const focusLabel = lowestDimension.charAt(0).toUpperCase() + lowestDimension.slice(1);
+            summaryHtml += `
+                <div class="focus-area">
+                    <h2>Your Focus: ${focusLabel}</h2>
+                    <p>${interpretation.description}</p>
+                    <div class="action-box">
+                        <h3>What To Do:</h3>
+                        <p>${interpretation.action}</p>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        } else {
+            // All scores are equal - provide general encouragement
+            summaryHtml += `
+                <div class="focus-area" style="border-left-color: #3b82f6;">
+                    <h2 style="color: #1e40af;">All Areas Are Equal</h2>
+                    <p style="color: #1e293b;">You're experiencing things fairly consistently across all three dimensions. This balance can be helpful - there's no single urgent area demanding your attention.</p>
+                    <div class="action-box">
+                        <h3>What To Do:</h3>
+                        <p>Continue with what's working. If you're doing well across the board, maintain your current approach. If you're struggling everywhere, consider getting support that addresses all three areas together.</p>
+                    </div>
+                </div>
+            `;
+        }
         
         document.getElementById('interpretation-area').innerHTML = summaryHtml;
     },

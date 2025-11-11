@@ -136,10 +136,10 @@ function getZone(score) {
 
 // Get needle rotation for gauge
 function getNeedleRotation(score) {
-    // E at 8 o'clock (-135deg), F at 4 o'clock (+135deg)
-    // Total rotation span: 270 degrees
-    // 0 = -135deg (AT E), 100 = +135deg (AT F)
-    return -135 + (score * 2.7);
+    // E at approximately 8 o'clock (-125deg), F at approximately 4 o'clock (+125deg)
+    // Total rotation span: 250 degrees (safe margin from gauge edges)
+    // 0 = -125deg (AT E), 100 = +125deg (AT F)
+    return -125 + (score * 2.5);
 }
 
 // Interpretations for each dimension and zone
